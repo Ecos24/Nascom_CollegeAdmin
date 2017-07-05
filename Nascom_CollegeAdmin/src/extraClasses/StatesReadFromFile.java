@@ -15,6 +15,8 @@ public class StatesReadFromFile
 	
 	static
 	{
+		states = new ArrayList<>();
+		states.add("Select");
 		try
 		{
 			fr = new FileReader(filePath);
@@ -34,12 +36,26 @@ public class StatesReadFromFile
 		{
 			System.out.println("Excetion occured while Reading States File.");
 		}
+		finally
+		{
+			try
+			{
+				if(fr != null)
+					fr.close();
+				if(br != null)
+					br.close();
+			}
+			catch(IOException ex)
+			{
+				System.out.println("Exception occured "+ex.getMessage());
+			}
+		}
 	}
 	
-	public static String[] states()
-	{
-		String[] statesArray = new String[states.size()];
-		statesArray = states.toArray(statesArray);
-		return statesArray;
+	public static String[] getStates()
+	{		
+		String[] stateArray = new String[states.size()];
+		stateArray = states.toArray(stateArray);
+		return stateArray;
 	}
 }

@@ -19,6 +19,7 @@ import extraClasses.StatesReadFromFile;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JSeparator;
+import java.awt.Font;
 
 public class CompStudentReg
 {
@@ -32,6 +33,8 @@ public class CompStudentReg
 	
 	// Components Declaration.
 	// Section 1.
+	private JTextPane section1Header;
+	private JSeparator section1Separator;
 	private JTextField stdFirstName;
 	private JTextField stdMiddelName;
 	private JTextField stdLastName;
@@ -52,8 +55,9 @@ public class CompStudentReg
 	private JTextPane stdEmailTextPane;
 	private JTextPane stdMobNoTextPane;
 	private JTextPane stdCategoryTextPane;
-	private JSeparator seonction1Separator;
 	// Section 2.
+	private JTextPane section2Header;
+	private JSeparator section2Separator;
 	@SuppressWarnings("rawtypes")
 	private JComboBox stdAddState;
 	@SuppressWarnings("rawtypes")
@@ -64,7 +68,6 @@ public class CompStudentReg
 	private JTextPane stdAddCityTextPane;
 	private JTextPane stdAddPincodeTextPane;
 	private JTextPane stdAddHomeTextPane;
-	private JSeparator seonction2Separator;
 	
 	
 	public static void main(String[] args)
@@ -93,6 +96,8 @@ public class CompStudentReg
 	private void associateFrameComponents()
 	{		
 		//Section 1.
+		compStudentReg.getContentPane().add(section1Header);
+		compStudentReg.getContentPane().add(section1Separator);
 		compStudentReg.getContentPane().add(stdFirstNameTextPane);
 		compStudentReg.getContentPane().add(stdFirstName);
 		compStudentReg.getContentPane().add(stdMiddleNameTextPane);
@@ -109,10 +114,10 @@ public class CompStudentReg
 		compStudentReg.getContentPane().add(stdCategory);
 		compStudentReg.getContentPane().add(stdMobNoTextPane);
 		compStudentReg.getContentPane().add(stdMobNo);
-		
-		compStudentReg.getContentPane().add(seonction1Separator);
 
 		//Section 2.
+		compStudentReg.getContentPane().add(section2Header);
+		compStudentReg.getContentPane().add(section2Separator);
 		compStudentReg.getContentPane().add(stdAddStateTextPane);
 		compStudentReg.getContentPane().add(stdAddState);
 		compStudentReg.getContentPane().add(stdAddCityTextPane);
@@ -121,8 +126,6 @@ public class CompStudentReg
 		compStudentReg.getContentPane().add(stdAddPincode);
 		compStudentReg.getContentPane().add(stdAddHomeTextPane);
 		compStudentReg.getContentPane().add(stdAddHome);
-		
-		compStudentReg.getContentPane().add(seonction2Separator);
 		
 
 		//logInFrame.getRootPane().setDefaultButton(LogIn);
@@ -134,42 +137,49 @@ public class CompStudentReg
 		//////////////////////////////////////////////////////////////////
 		//////////////////////FIRST SECTION///////////////////////////////
 		//////////////////////////////////////////////////////////////////
-		seonction1Separator = new JSeparator(SwingConstants.HORIZONTAL);
-		seonction1Separator.setBounds(0, 37, frameLength, 2);
+		section1Header = new JTextPane();
+		section1Header.setFont(new Font("Dialog", Font.BOLD, 16));
+		section1Header.setBounds(20, 25, 150, 20);
+		section1Header.setBackground(bgColor);
+		section1Header.setText("Personal Details");
+		section1Header.setFocusable(false);
+		section1Header.setEditable(false);
+		section1Separator = new JSeparator(SwingConstants.HORIZONTAL);
+		section1Separator.setBounds(0, 37, frameLength, 2);
 		// First Row
 		stdFirstNameTextPane = new JTextPane();
-		stdFirstNameTextPane.setBounds(20, 50, 80, 20);
+		stdFirstNameTextPane.setBounds(20, 60, 80, 20);
 		stdFirstNameTextPane.setBackground(bgColor);
 		stdFirstNameTextPane.setText("First Name");
 		stdFirstNameTextPane.setFocusable(false);
 		stdFirstNameTextPane.setEditable(false);
 		stdFirstName = new JTextField();
-		stdFirstName.setBounds(110, 50, 130, 20);
+		stdFirstName.setBounds(110, 60, 130, 20);
 		stdFirstName.setColumns(10);
 		
 		stdMiddleNameTextPane = new JTextPane();
-		stdMiddleNameTextPane.setBounds(270, 50, 90, 20);
+		stdMiddleNameTextPane.setBounds(270, 60, 90, 20);
 		stdMiddleNameTextPane.setBackground(bgColor);
 		stdMiddleNameTextPane.setText("Middle Name");
 		stdMiddleNameTextPane.setFocusable(false);
 		stdMiddleNameTextPane.setEditable(false);
 		stdMiddelName = new JTextField();
-		stdMiddelName.setBounds(360, 50, 130, 20);
+		stdMiddelName.setBounds(360, 60, 130, 20);
 		stdMiddelName.setColumns(10);
 
 		stdLastNameTextPane = new JTextPane();
-		stdLastNameTextPane.setBounds(520, 50, 80, 20);
+		stdLastNameTextPane.setBounds(520, 60, 80, 20);
 		stdLastNameTextPane.setBackground(bgColor);
 		stdLastNameTextPane.setText("Last Name");
 		stdLastNameTextPane.setFocusable(false);
 		stdLastNameTextPane.setEditable(false);
 		stdLastName = new JTextField();
 		stdLastName.setColumns(10);
-		stdLastName.setBounds(610, 50, 130, 20);
+		stdLastName.setBounds(610, 60, 130, 20);
 		
 		// Second Row
 		stdDOBTextPane = new JTextPane();
-		stdDOBTextPane.setBounds(20, 90, 80, 20);
+		stdDOBTextPane.setBounds(20, 100, 80, 20);
 		stdDOBTextPane.setBackground(bgColor);
 		stdDOBTextPane.setText("DOB");
 		stdDOBTextPane.setFocusable(false);
@@ -181,92 +191,99 @@ public class CompStudentReg
 		datePanelProperties.put("text.year", "Year");
 		stdDOBDatePickerPanel = new JDatePanelImpl(stdDOBDateModel, datePanelProperties);
 		stdDOB = new JDatePickerImpl(stdDOBDatePickerPanel, new DateLabelFormatter() );
-		stdDOB.setBounds(110, 90, 130, 25);
+		stdDOB.setBounds(110, 100, 130, 25);
 		
 		stdGenderTextPane = new JTextPane();
-		stdGenderTextPane.setBounds(270, 90, 80, 20);
+		stdGenderTextPane.setBounds(270, 100, 80, 20);
 		stdGenderTextPane.setBackground(bgColor);
 		stdGenderTextPane.setText("Gender");
 		stdGenderTextPane.setFocusable(false);
 		stdGenderTextPane.setEditable(false);
-		String[] stdGenderChoices = {"Select","Female","Male", "Trangender"};
+		String[] stdGenderChoices = {"Select","Female","Male", "Transgender"};
 		stdGender = new JComboBox(stdGenderChoices);
-		stdGender.setBounds(360, 90, 130, 20);
+		stdGender.setBounds(360, 100, 130, 20);
 
 		stdEmailTextPane = new JTextPane();
-		stdEmailTextPane.setBounds(520, 90, 80, 20);
+		stdEmailTextPane.setBounds(520, 100, 80, 20);
 		stdEmailTextPane.setBackground(bgColor);
 		stdEmailTextPane.setText("E-Mail");
 		stdEmailTextPane.setFocusable(false);
 		stdEmailTextPane.setEditable(false);
 		stdEmail = new JTextField();
 		stdEmail.setColumns(10);
-		stdEmail.setBounds(610, 90, 130, 20);
+		stdEmail.setBounds(610, 100, 130, 20);
 		
 		// Third Row.
 		stdMobNoTextPane = new JTextPane();
-		stdMobNoTextPane.setBounds(20, 130, 80, 20);
+		stdMobNoTextPane.setBounds(20, 140, 80, 20);
 		stdMobNoTextPane.setBackground(bgColor);
 		stdMobNoTextPane.setText("Moblie");
 		stdMobNoTextPane.setFocusable(false);
 		stdMobNoTextPane.setEditable(false);
 		stdMobNo = new JFormattedTextField();
-		stdMobNo.setBounds(110, 130, 130, 20);
+		stdMobNo.setBounds(110, 140, 130, 20);
 
 		stdCategoryTextPane = new JTextPane();
-		stdCategoryTextPane.setBounds(270, 130, 80, 20);
+		stdCategoryTextPane.setBounds(270, 140, 80, 20);
 		stdCategoryTextPane.setBackground(bgColor);
 		stdCategoryTextPane.setText("Category");
 		stdCategoryTextPane.setFocusable(false);
 		stdCategoryTextPane.setEditable(false);
 		String[] stdCategoryChoices = {"Select","GEN","OBC(Creamy)", "OBC(Non-Creamy)", "SC", "ST"};
 		stdCategory = new JComboBox(stdCategoryChoices);
-		stdCategory.setBounds(360, 130, 130, 20);
+		stdCategory.setBounds(360, 140, 130, 20);
 		
 		//////////////////////////////////////////////////////////////////
 		//////////////////////SECOND SECTION//////////////////////////////
 		//////////////////////////////////////////////////////////////////
-		seonction2Separator = new JSeparator(SwingConstants.HORIZONTAL);
-		seonction2Separator.setBounds(0, 192, frameLength, 2);
+		section2Header = new JTextPane();
+		section2Header.setFont(new Font("Dialog", Font.BOLD, 16));
+		section2Header.setBounds(20, 180, 150, 20);
+		section2Header.setBackground(bgColor);
+		section2Header.setText("Postal Details");
+		section2Header.setFocusable(false);
+		section2Header.setEditable(false);
+		section2Separator = new JSeparator(SwingConstants.HORIZONTAL);
+		section2Separator.setBounds(0, 192, frameLength, 2);
 		// First Row
 		stdAddStateTextPane = new JTextPane();
-		stdAddStateTextPane.setBounds(20, 205, 80, 20);
+		stdAddStateTextPane.setBounds(20, 215, 80, 20);
 		stdAddStateTextPane.setBackground(bgColor);
 		stdAddStateTextPane.setText("State");
 		stdAddStateTextPane.setFocusable(false);
 		stdAddStateTextPane.setEditable(false);
-		String[] stdAddStatesChoices = StatesReadFromFile.states();
+		String[] stdAddStatesChoices = StatesReadFromFile.getStates();
 		stdAddState = new JComboBox(stdAddStatesChoices);
-		stdAddState.setBounds(110, 205, 130, 20);
+		stdAddState.setBounds(110, 215, 130, 20);
 		
 		stdAddCityTextPane = new JTextPane();
-		stdAddCityTextPane.setBounds(270, 205, 90, 20);
+		stdAddCityTextPane.setBounds(270, 215, 90, 20);
 		stdAddCityTextPane.setBackground(bgColor);
 		stdAddCityTextPane.setText("City");
 		stdAddCityTextPane.setFocusable(false);
 		stdAddCityTextPane.setEditable(false);
 		stdAddCity = new JComboBox();
-		stdAddCity.setBounds(360, 205, 130, 20);
+		stdAddCity.setBounds(360, 215, 130, 20);
 
 		stdAddPincodeTextPane = new JTextPane();
-		stdAddPincodeTextPane.setBounds(520, 205, 80, 20);
+		stdAddPincodeTextPane.setBounds(520, 215, 80, 20);
 		stdAddPincodeTextPane.setBackground(bgColor);
 		stdAddPincodeTextPane.setText("Pin Code");
 		stdAddPincodeTextPane.setFocusable(false);
 		stdAddPincodeTextPane.setEditable(false);
 		stdAddPincode = new JFormattedTextField();
 		stdAddPincode.setColumns(10);
-		stdAddPincode.setBounds(610, 205, 130, 20);
+		stdAddPincode.setBounds(610, 215, 130, 20);
 		
 		// Second Row
 		stdAddHomeTextPane = new JTextPane();
-		stdAddHomeTextPane.setBounds(20, 245, 80, 20);
+		stdAddHomeTextPane.setBounds(20, 255, 80, 20);
 		stdAddHomeTextPane.setBackground(bgColor);
-		stdAddHomeTextPane.setText("DOB");
+		stdAddHomeTextPane.setText("Address");
 		stdAddHomeTextPane.setFocusable(false);
 		stdAddHomeTextPane.setEditable(false);
 		stdAddHome = new JTextField();
-		stdAddHome.setBounds(110, 245, 130, 25);
+		stdAddHome.setBounds(110, 255, 130, 25);
 		
 		compStudentReg.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		compStudentReg.setResizable(false);
