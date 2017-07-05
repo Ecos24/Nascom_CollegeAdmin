@@ -72,8 +72,9 @@ public class Register
 		userTypeTextPane.setText("Profile Type");
 		userTypeTextPane.setEditable(false);
 		userTypeTextPane.setFocusable(false);
-		String[] profileTypeChoices = {"Student","Faculty"};
+		String[] profileTypeChoices = {"Select","Student","Faculty"};
 		profileType = new JComboBox(profileTypeChoices);
+		profileType.setSelectedIndex(0);
 		profileType.setBounds(135, 50, 154, 20);
 
 		userNameTextPane = new JTextPane();
@@ -84,6 +85,7 @@ public class Register
 		userNameTextPane.setFocusable(false);
 		userName = new JTextField();
 		userName.setBounds(135, 100, 154, 20);
+		userName.setEnabled(false);
 
 		passwordTextPane = new JTextPane();
 		passwordTextPane.setBackground(bgColor);
@@ -100,6 +102,21 @@ public class Register
 		/////////////////////////////////////////////////////////////////////////
 		//////////////////////////Listner's///////////////////////////////////////
 		/////////////////////////////////////////////////////////////////////////
+		profileType.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
+				if( profileType.getItemAt(profileType.getSelectedIndex()).toString().toLowerCase().equals("student") )
+				{
+					// Code to fect next ID from DB.
+					userName.setText("STD2014bbs");
+				}
+				else if( profileType.getItemAt(profileType.getSelectedIndex()).toString().toLowerCase().equals("faculty") )
+				{
+					userName.setText("FAC2014bbs");
+				}
+			}
+		});
 		Register.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
@@ -139,7 +156,7 @@ public class Register
 				}
 				else if( userN.equals("") )
 				{
-					JOptionPane.showMessageDialog(regFrame, "Please provide UserName!!");
+					JOptionPane.showMessageDialog(regFrame, "Please provide Profile Type!!");
 				}
 				else if( pass.equals("") )
 				{
