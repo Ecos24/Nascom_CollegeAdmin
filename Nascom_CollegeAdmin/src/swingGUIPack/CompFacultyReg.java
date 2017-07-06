@@ -1,6 +1,7 @@
 package swingGUIPack;
 
 import java.awt.Color;
+import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
@@ -12,7 +13,19 @@ public class CompFacultyReg
 	private static final int frameheigth = 300;
 	private Color bgColor;
 	
-	public JFrame compFacultyReg;
+	private JFrame compFacultyReg;
+	
+	public static void main(String[] args)
+	{
+		EventQueue.invokeLater(new Runnable()
+		{
+			public void run()
+			{
+				CompFacultyReg window = new CompFacultyReg();
+				window.compFacultyReg.setVisible(true);
+			}
+		});
+	}
 	
 	public CompFacultyReg()
 	{
