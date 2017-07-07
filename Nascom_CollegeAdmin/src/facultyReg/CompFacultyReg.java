@@ -1,4 +1,4 @@
-package swingGUIPack;
+package facultyReg;
 
 import java.awt.Color;
 import java.awt.EventQueue;

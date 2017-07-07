@@ -1,17 +1,21 @@
-package swingGUIPack;
+package studentReg;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Properties;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
+import javax.swing.text.NumberFormatter;
 
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.SqlDateModel;
+import org.jdatepicker.impl.UtilDateModel;
 
 import extendedClasses.DateLabelFormatter;
 import extraClasses.StatesReadFromFile;
@@ -22,14 +26,20 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JSeparator;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
 import java.awt.event.ActionEvent;
+import javax.swing.JButton;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class CompStudentReg
 {
+	private final static int PIN_CODE = 6;
+	private final static int MOB_DIGIT = 10;
 	private static final int framex = 0;
 	private static final int framey = 0;
 	private static final int frameLength = 800;
-	private static final int frameheigth = 800;
+	private static final int frameheigth = 500;
 	private Color bgColor;
 	
 	private JFrame compStudentReg;
@@ -41,7 +51,7 @@ public class CompStudentReg
 	private JTextField stdFirstName;
 	private JTextField stdMiddelName;
 	private JTextField stdLastName;
-	private SqlDateModel stdDOBDateModel;
+	private UtilDateModel stdDOBDateModel;
 	private JDatePanelImpl stdDOBDatePickerPanel;
 	private JDatePickerImpl stdDOB;
 	@SuppressWarnings("rawtypes")
@@ -85,35 +95,8 @@ public class CompStudentReg
 	private JTextPane stdCorespAddCityTextPane;
 	private JTextPane stdCorespAddPincodeTextPane;
 	private JTextPane stdCorespAddHomeTextPane;
-	//Section 4.
-	private JTextPane section4Header;
-	private JSeparator section4Separator;
-	private JTextField stdFatherFirstName;
-	private JTextField stdFatherMiddelName;
-	private JTextField stdFatherLastName;
-	private JFormattedTextField stdFatherMobNo;
-	@SuppressWarnings("rawtypes")
-	private JComboBox stdFatherOccupation;
-	private JTextField stdFatherEmail;
-	private JTextPane stdFatherFirstNameTextPane;
-	private JTextPane stdFatherMiddleNameTextPane;
-	private JTextPane stdFatherLastNameTextPane;
-	private JTextPane stdFatherMobNoTextPane;
-	private JTextPane stdFatherOccupationTextPane;
-	private JTextPane stdFatherEmailTextPane;
-	private JTextField stdMotherFirstName;
-	private JTextField stdMotherMiddelName;
-	private JTextField stdMotherLastName;
-	private JFormattedTextField stdMotherMobNo;
-	@SuppressWarnings("rawtypes")
-	private JComboBox stdMotherOccupation;
-	private JTextField stdMotherEmail;
-	private JTextPane stdMotherFirstNameTextPane;
-	private JTextPane stdMotherMiddelNameTextPane;
-	private JTextPane stdMotherLastNameTextPane;
-	private JTextPane stdMotherMobNoTextPane;
-	private JTextPane stdMotherOccupationTextPane;
-	private JTextPane stdMotherEmailTextPane;
+	
+	private JButton stdRegNextFrame;
 	
 	
 	public static void main(String[] args)
@@ -136,6 +119,7 @@ public class CompStudentReg
 		bgColor = new Color(238, 238, 238);
 		initializeFrame();
 		initComponents();
+		initListeners();
 		associateFrameComponents();
 	}
 	
@@ -185,31 +169,17 @@ public class CompStudentReg
 		compStudentReg.getContentPane().add(stdCorespAddPincode);
 		compStudentReg.getContentPane().add(stdCorespAddHomeTextPane);
 		compStudentReg.getContentPane().add(stdCorespAddHome);
+		compStudentReg.getContentPane().add(stdRegNextFrame);
 		
-		//Section 4.
-		compStudentReg.getContentPane().add(section4Header);
-		compStudentReg.getContentPane().add(section4Separator);
-		compStudentReg.getContentPane().add(stdFatherFirstNameTextPane);
-		compStudentReg.getContentPane().add(stdFatherFirstName);
-		compStudentReg.getContentPane().add(stdFatherMiddleNameTextPane);
-		compStudentReg.getContentPane().add(stdFatherMiddelName);
-		compStudentReg.getContentPane().add(stdFatherLastNameTextPane);
-		compStudentReg.getContentPane().add(stdFatherLastName);
-		compStudentReg.getContentPane().add(stdFatherMobNoTextPane);
-		compStudentReg.getContentPane().add(stdFatherMobNo);
-		compStudentReg.getContentPane().add(stdFatherOccupationTextPane);
-		compStudentReg.getContentPane().add(stdFatherOccupation);
-		compStudentReg.getContentPane().add(stdFatherEmailTextPane);
-		compStudentReg.getContentPane().add(stdFatherEmail);
+		compStudentReg.getRootPane().setDefaultButton(stdRegNextFrame);
 		
 		compStudentReg.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		compStudentReg.setResizable(false);
-		//compStudentReg.getRootPane().setDefaultButton(LogIn);
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void initComponents()
-	{
+	{		
 		//////////////////////////////////////////////////////////////////
 		//////////////////////FIRST SECTION///////////////////////////////
 		//////////////////////////////////////////////////////////////////
@@ -260,7 +230,7 @@ public class CompStudentReg
 		stdDOBTextPane.setText("DOB");
 		stdDOBTextPane.setFocusable(false);
 		stdDOBTextPane.setEditable(false);
-		stdDOBDateModel = new SqlDateModel();
+		stdDOBDateModel = new UtilDateModel();
 		Properties datePanelProperties = new Properties();
 		datePanelProperties.put("text.today", "Today");
 		datePanelProperties.put("text.month", "Month");
@@ -296,7 +266,7 @@ public class CompStudentReg
 		stdMobNoTextPane.setText("Moblie");
 		stdMobNoTextPane.setFocusable(false);
 		stdMobNoTextPane.setEditable(false);
-		stdMobNo = new JFormattedTextField();
+		stdMobNo = new JFormattedTextField(returnFormatter(MOB_DIGIT));
 		stdMobNo.setBounds(110, 140, 130, 20);
 
 		stdCategoryTextPane = new JTextPane();
@@ -347,7 +317,7 @@ public class CompStudentReg
 		stdAddPincodeTextPane.setText("Pin Code");
 		stdAddPincodeTextPane.setFocusable(false);
 		stdAddPincodeTextPane.setEditable(false);
-		stdAddPincode = new JFormattedTextField();
+		stdAddPincode = new JFormattedTextField(returnFormatter(PIN_CODE));
 		stdAddPincode.setColumns(10);
 		stdAddPincode.setBounds(610, 215, 130, 20);
 		
@@ -400,7 +370,7 @@ public class CompStudentReg
 		stdCorespAddPincodeTextPane.setText("Pin Code");
 		stdCorespAddPincodeTextPane.setFocusable(false);
 		stdCorespAddPincodeTextPane.setEditable(false);
-		stdCorespAddPincode = new JFormattedTextField();
+		stdCorespAddPincode = new JFormattedTextField(returnFormatter(PIN_CODE));
 		stdCorespAddPincode.setColumns(10);
 		stdCorespAddPincode.setBounds(610, 330, 130, 20);
 		
@@ -414,79 +384,14 @@ public class CompStudentReg
 		stdCorespAddHome = new JTextField();
 		stdCorespAddHome.setBounds(110, 370, 300, 20);
 		
-		//////////////////////////////////////////////////////////////////
-		////////////////////// FOURTH SECTION/////////////////////////////
-		//////////////////////////////////////////////////////////////////
-		section4Header = new JTextPane();
-		section4Header.setFont(new Font("Dialog", Font.BOLD, 16));
-		section4Header.setBounds(20, 410, 150, 20);
-		section4Header.setBackground(bgColor);
-		section4Header.setText("Parental Details");
-		section4Header.setFocusable(false);
-		section4Header.setEditable(false);
-		section4Separator = new JSeparator(SwingConstants.HORIZONTAL);
-		section4Separator.setBounds(0, 422, frameLength, 2);
-		// First Row
-		stdFatherFirstNameTextPane = new JTextPane();
-		stdFatherFirstNameTextPane.setBounds(20, 445, 80, 20);
-		stdFatherFirstNameTextPane.setBackground(bgColor);
-		stdFatherFirstNameTextPane.setText("Father's First Name");
-		stdFatherFirstNameTextPane.setFocusable(false);
-		stdFatherFirstNameTextPane.setEditable(false);
-		stdFatherFirstName = new JTextField();
-		stdFatherFirstName.setBounds(110, 445, 130, 20);
-		stdFatherFirstName.setColumns(10);
-
-		stdFatherMiddleNameTextPane = new JTextPane();
-		stdFatherMiddleNameTextPane.setBounds(270, 445, 90, 20);
-		stdFatherMiddleNameTextPane.setBackground(bgColor);
-		stdFatherMiddleNameTextPane.setText("Father's Middle Name");
-		stdFatherMiddleNameTextPane.setFocusable(false);
-		stdFatherMiddleNameTextPane.setEditable(false);
-		stdFatherMiddelName = new JTextField();
-		stdFatherMiddelName.setBounds(360, 445, 130, 20);
-		stdFatherMiddelName.setColumns(10);
-
-		stdFatherLastNameTextPane = new JTextPane();
-		stdFatherLastNameTextPane.setBounds(520, 445, 80, 20);
-		stdFatherLastNameTextPane.setBackground(bgColor);
-		stdFatherLastNameTextPane.setText("Father's Last Name");
-		stdFatherLastNameTextPane.setFocusable(false);
-		stdFatherLastNameTextPane.setEditable(false);
-		stdFatherLastName = new JTextField();
-		stdFatherLastName.setColumns(10);
-		stdFatherLastName.setBounds(610, 445, 130, 20);
-
-		// Second Row
-		stdFatherMobNoTextPane = new JTextPane();
-		stdFatherMobNoTextPane.setBounds(20, 485, 80, 20);
-		stdFatherMobNoTextPane.setBackground(bgColor);
-		stdFatherMobNoTextPane.setText("Father's Mobile");
-		stdFatherMobNoTextPane.setFocusable(false);
-		stdFatherMobNoTextPane.setEditable(false);
-		stdFatherMobNo = new JFormattedTextField();
-		stdFatherMobNo.setBounds(110, 485, 130, 20);
-
-		stdFatherOccupationTextPane = new JTextPane();
-		stdFatherOccupationTextPane.setBounds(270, 485, 80, 20);
-		stdFatherOccupationTextPane.setBackground(bgColor);
-		stdFatherOccupationTextPane.setText("Father's Occupation");
-		stdFatherOccupationTextPane.setFocusable(false);
-		stdFatherOccupationTextPane.setEditable(false);
-		String[] occupationChoices = { "Select", "Enginner", "Doctor", "Armed Forces", "Government Employeed", "Self Employeed" };
-		stdFatherOccupation = new JComboBox(occupationChoices);
-		stdFatherOccupation.setBounds(360, 485, 130, 20);
-
-		stdFatherEmailTextPane = new JTextPane();
-		stdFatherEmailTextPane.setBounds(520, 485, 80, 20);
-		stdFatherEmailTextPane.setBackground(bgColor);
-		stdFatherEmailTextPane.setText("Father's E-Mail");
-		stdFatherEmailTextPane.setFocusable(false);
-		stdFatherEmailTextPane.setEditable(false);
-		stdFatherEmail = new JTextField();
-		stdFatherEmail.setColumns(10);
-		stdFatherEmail.setBounds(610, 485, 130, 20);
 		
+		stdRegNextFrame = new JButton("New button");
+		stdRegNextFrame.setText("Continue");
+		stdRegNextFrame.setBounds(((frameLength/2)-60), 432, 120, 25);
+	}
+	
+	private void initListeners()
+	{
 		//////////////////////////////////////////////////////////////////////
 		//////////////////////////////Listner's///////////////////////////////
 		//////////////////////////////////////////////////////////////////////
@@ -500,7 +405,7 @@ public class CompStudentReg
 					stdCorespAddCity.setEnabled(false);
 					stdCorespAddHome.setEnabled(false);
 					stdCorespAddPincode.setEnabled(false);
-
+					
 					stdCorespAddState.setSelectedIndex(stdAddState.getSelectedIndex());
 					stdCorespAddCity.setSelectedIndex(stdAddCity.getSelectedIndex());
 					stdCorespAddHome.setText(stdAddHome.getText());
@@ -519,6 +424,59 @@ public class CompStudentReg
 				}
 			}
 		});
+		
+		stdMobNo.addKeyListener(new KeyAdapter()
+		{
+			@Override
+			public void keyReleased(KeyEvent arg0)
+			{
+				if( arg0.getKeyCode() == KeyEvent.VK_BACK_SPACE )
+				{
+					if( stdMobNo.getText().length() == 1 )
+					{
+						stdMobNo.setText("0");
+					}
+				}
+			}
+		});
+
+		// Button Registration Listener.
+		stdRegNextFrame.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
+				Date selectedDate = (Date) stdDOB.getModel().getValue();
+				if( stdFirstName.getText().equals("") || stdLastName.getText().equals("") || 
+						stdGender.getSelectedIndex() == 0 || selectedDate == null ||
+						stdEmail.getText().equals("") || stdMobNo.getText().equals("") || 
+						stdCorespAddCity.getSelectedIndex() == 0 )
+				{
+					JOptionPane.showMessageDialog(null, "Complete Personal Details");
+					return;
+				}
+				if( stdMobNo.getText().length() != 10 )
+				{
+					JOptionPane.showMessageDialog(null, "Invalid Mobile Number");
+					return;
+				}
+				if( stdAddState.getSelectedIndex() == 0 || stdAddCity.getSelectedIndex() == 0 ||
+						stdAddHome.getText().equals("") || stdAddPincode.getText().equals("") )
+				{
+					JOptionPane.showMessageDialog(null, "Complete Postal Details");
+					return;
+				}
+				if( stdCorespAddState.getSelectedIndex() == 0 || stdCorespAddCity.getSelectedIndex() == 0 ||
+						stdCorespAddHome.getText().equals("") || stdCorespAddPincode.getText().equals("") )
+				{
+					JOptionPane.showMessageDialog(null, "Complete Correspondence Postal Details");
+					return;
+				}
+				
+				CompStudentReg1 reg = new CompStudentReg1();
+				reg.compStudentReg1.setVisible(true);
+				compStudentReg.dispose();
+			}
+		});
 	}
 	
 	private void initializeFrame()
@@ -528,5 +486,17 @@ public class CompStudentReg
 		compStudentReg.setBackground(bgColor);
 		compStudentReg.getContentPane().setLayout(null);
 		compStudentReg.setVisible(true);
+	}
+	
+	private NumberFormatter returnFormatter(int maxallowed)
+	{
+		NumberFormat longFormat = NumberFormat.getIntegerInstance(Locale.getDefault());
+		longFormat.setGroupingUsed(false);
+		longFormat.setMaximumFractionDigits(0);
+		NumberFormatter numberFormatter = new NumberFormatter(longFormat);
+		numberFormatter.setMaximum(9999999999l);
+		numberFormatter.setAllowsInvalid(false);
+		
+		return numberFormatter;
 	}
 }
