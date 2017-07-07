@@ -42,7 +42,7 @@ public class CompStudentReg
 	private static final int frameheigth = 500;
 	private Color bgColor;
 	
-	private JFrame compStudentReg;
+	public JFrame compStudentReg;
 	
 	// Components Declaration.
 	// Section 1.
@@ -385,15 +385,14 @@ public class CompStudentReg
 		stdCorespAddHome.setBounds(110, 370, 300, 20);
 		
 		
-		stdRegNextFrame = new JButton("New button");
-		stdRegNextFrame.setText("Continue");
+		stdRegNextFrame = new JButton("Continue");
 		stdRegNextFrame.setBounds(((frameLength/2)-60), 432, 120, 25);
 	}
 	
 	private void initListeners()
 	{
 		//////////////////////////////////////////////////////////////////////
-		//////////////////////////////Listner's///////////////////////////////
+		//////////////////////////////Listener///////////////////////////////
 		//////////////////////////////////////////////////////////////////////
 		stdCorespChoice.addActionListener(new ActionListener()
 		{
@@ -439,6 +438,35 @@ public class CompStudentReg
 				}
 			}
 		});
+		stdAddPincode.addKeyListener(new KeyAdapter()
+		{
+			@Override
+			public void keyReleased(KeyEvent arg0)
+			{
+				if( arg0.getKeyCode() == KeyEvent.VK_BACK_SPACE )
+				{
+					if( stdAddPincode.getText().length() == 1 )
+					{
+						stdAddPincode.setText("0");
+					}
+				}
+			}
+		});
+		stdCorespAddPincode.addKeyListener(new KeyAdapter()
+		{
+			@Override
+			public void keyReleased(KeyEvent arg0)
+			{
+				if( arg0.getKeyCode() == KeyEvent.VK_BACK_SPACE )
+				{
+					if( stdCorespAddPincode.getText().length() == 1 )
+					{
+						stdCorespAddPincode.setText("0");
+					}
+				}
+			}
+		});
+		
 
 		// Button Registration Listener.
 		stdRegNextFrame.addActionListener(new ActionListener()
@@ -465,10 +493,20 @@ public class CompStudentReg
 					JOptionPane.showMessageDialog(null, "Complete Postal Details");
 					return;
 				}
+				if( stdAddPincode.getText().length() != PIN_CODE )
+				{
+					JOptionPane.showMessageDialog(null, "Invalid Pin Code");
+					return;
+				}
 				if( stdCorespAddState.getSelectedIndex() == 0 || stdCorespAddCity.getSelectedIndex() == 0 ||
 						stdCorespAddHome.getText().equals("") || stdCorespAddPincode.getText().equals("") )
 				{
 					JOptionPane.showMessageDialog(null, "Complete Correspondence Postal Details");
+					return;
+				}
+				if( stdCorespAddPincode.getText().length() != PIN_CODE )
+				{
+					JOptionPane.showMessageDialog(null, "Invalid Pin Code");
 					return;
 				}
 				
