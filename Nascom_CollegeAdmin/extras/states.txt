@@ -12,7 +12,7 @@ Goa
 Gujarat
 Haryana
 Himachal Pradesh
-Jammu & Kashmir
+Jammu and Kashmir
 Jharkhand
 Karnataka
 Kerala
@@ -23,10 +23,11 @@ Manipur
 Meghalaya
 Mizoram
 Nagaland
-Odisha
+Orissa
 Puducherry
 Punjab
 Rajasthan
+Rohtak
 Sikkim
 Tamil Nadu
 Telangana

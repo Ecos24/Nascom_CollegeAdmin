@@ -7,17 +7,27 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class CityReadFromFile
-{	
-	public static String[] getStates(String stateName)
+{
+	private static String filePath;
+	private static FileReader fr = null;
+	private static BufferedReader br = null;
+	private static ArrayList<String> states;
+	
+	public static String[] getCities(String stateName)
 	{
-		String filePath = "extras/"+stateName+".txt";
-		FileReader fr = null;
-		BufferedReader br = null;
-		ArrayList<String> states = new ArrayList<>();
+		readFile(stateName);
+		String[] stateArray = new String[states.size()];
+		stateArray = states.toArray(stateArray);
+		return stateArray;
+	}
+	
+	private static void readFile(String fileName)
+	{
+		states = new ArrayList<>();
 		states.add("Select");
-		
 		try
 		{
+			filePath = "extras/"+fileName+".txt";
 			fr = new FileReader(filePath);
 			br = new BufferedReader(fr);
 			String currentLine;
@@ -49,9 +59,5 @@ public class CityReadFromFile
 				System.out.println("Exception occured "+ex.getMessage());
 			}
 		}
-		
-		String[] stateArray = new String[states.size()];
-		stateArray = states.toArray(stateArray);
-		return stateArray;
 	}
 }

@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Properties;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -30,6 +31,7 @@ import org.jdatepicker.impl.UtilDateModel;
 
 import beanClasses.User;
 import extendedClasses.DateLabelFormatter;
+import extraClasses.CityReadFromFile;
 import extraClasses.StatesReadFromFile;
 
 public class CompStudentReg
@@ -43,9 +45,22 @@ public class CompStudentReg
 	private static final int framey = 0;
 	private static final int frameLength = 800;
 	private static final int frameheigth = 500;
+	private static final String[] defaultCity = {"Select State First"};
 	private Color bgColor;
 	
 	public JFrame compStudentReg;
+	
+	public static void main(String[] args)
+	{
+		EventQueue.invokeLater(new Runnable()
+		{
+			public void run()
+			{
+				CompStudentReg window = new CompStudentReg(null);
+				window.compStudentReg.setVisible(true);
+			}
+		});
+	}
 	
 	// Components Declaration.
 	// Section 1.
@@ -170,7 +185,7 @@ public class CompStudentReg
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void initComponents()
-	{		
+	{
 		//////////////////////////////////////////////////////////////////
 		//////////////////////FIRST SECTION///////////////////////////////
 		//////////////////////////////////////////////////////////////////
@@ -299,7 +314,7 @@ public class CompStudentReg
 		stdAddCityTextPane.setText("City");
 		stdAddCityTextPane.setFocusable(false);
 		stdAddCityTextPane.setEditable(false);
-		stdAddCity = new JComboBox();
+		stdAddCity = new JComboBox(defaultCity);
 		stdAddCity.setBounds(360, 215, 130, 20);
 
 		stdAddPincodeTextPane = new JTextPane();
@@ -352,7 +367,7 @@ public class CompStudentReg
 		stdCorespAddCityTextPane.setText("City");
 		stdCorespAddCityTextPane.setFocusable(false);
 		stdCorespAddCityTextPane.setEditable(false);
-		stdCorespAddCity = new JComboBox();
+		stdCorespAddCity = new JComboBox(defaultCity);
 		stdCorespAddCity.setBounds(360, 330, 130, 20);
 
 		stdCorespAddPincodeTextPane = new JTextPane();
@@ -385,6 +400,39 @@ public class CompStudentReg
 		//////////////////////////////////////////////////////////////////////
 		//////////////////////////////Listener///////////////////////////////
 		//////////////////////////////////////////////////////////////////////
+		stdAddState.addActionListener(new ActionListener()
+		{
+			@SuppressWarnings({ "unchecked", "rawtypes" })
+			public void actionPerformed(ActionEvent arg0)
+			{
+				if( stdAddState.getSelectedIndex() != 0 )
+				{
+					stdAddCity.setModel( new DefaultComboBoxModel( 
+							CityReadFromFile.getCities((String)stdAddState.getSelectedItem()) ));
+				}
+				else
+				{
+					stdAddCity.setModel( new DefaultComboBoxModel(defaultCity) );
+				}
+			}
+		});
+		stdCorespAddState.addActionListener(new ActionListener()
+		{
+			@SuppressWarnings({ "unchecked", "rawtypes" })
+			public void actionPerformed(ActionEvent arg0)
+			{
+				if( stdCorespAddState.getSelectedIndex() != 0 )
+				{
+					stdCorespAddCity.setModel( new DefaultComboBoxModel( 
+							CityReadFromFile.getCities((String)stdCorespAddState.getSelectedItem()) ));
+				}
+				else
+				{
+					stdCorespAddCity.setModel( new DefaultComboBoxModel(defaultCity) );
+				}
+			}
+		});
+
 		stdCorespChoice.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
@@ -404,6 +452,7 @@ public class CompStudentReg
 				else
 				{
 					stdCorespAddState.setSelectedIndex(0);
+					stdCorespAddCity.setSelectedIndex(0);
 					stdCorespAddHome.setText(null);
 					stdCorespAddPincode.setText(null);
 					
