@@ -2,12 +2,23 @@ package studentReg;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.text.NumberFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Properties;
 
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
@@ -17,25 +28,17 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
+import beanClasses.User;
 import extendedClasses.DateLabelFormatter;
 import extraClasses.StatesReadFromFile;
 
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
-import javax.swing.JSeparator;
-import java.awt.Font;
-import java.awt.event.ActionListener;
-import java.text.NumberFormat;
-import java.awt.event.ActionEvent;
-import javax.swing.JButton;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-
 public class CompStudentReg
 {
-	private final static int PIN_CODE = 6;
-	private final static int MOB_DIGIT = 10;
+	private User user;
+	
+	private final static int PIN_CODE_LENGTH = 6;
+	private final static long PIN_CODE = 999999l;
+	private final static long MOB_DIGIT = 9999999999l;
 	private static final int framex = 0;
 	private static final int framey = 0;
 	private static final int frameLength = 800;
@@ -98,24 +101,12 @@ public class CompStudentReg
 	
 	private JButton stdRegNextFrame;
 	
-	
-	public static void main(String[] args)
-	{
-		EventQueue.invokeLater(new Runnable()
-		{
-			public void run()
-			{
-				CompStudentReg window = new CompStudentReg();
-				window.compStudentReg.setVisible(true);
-			}
-		});
-	}
-	
 	/**
 	 * @wbp.parser.entryPoint
 	 */
-	public CompStudentReg()
+	public CompStudentReg(User user)
 	{
+		this.user = user;
 		bgColor = new Color(238, 238, 238);
 		initializeFrame();
 		initComponents();
@@ -429,7 +420,7 @@ public class CompStudentReg
 			@Override
 			public void keyReleased(KeyEvent arg0)
 			{
-				if( arg0.getKeyCode() == KeyEvent.VK_BACK_SPACE )
+				if( arg0.getKeyCode() == KeyEvent.VK_BACK_SPACE || arg0.getKeyCode() == KeyEvent.VK_DELETE )
 				{
 					if( stdMobNo.getText().length() == 1 )
 					{
@@ -443,7 +434,7 @@ public class CompStudentReg
 			@Override
 			public void keyReleased(KeyEvent arg0)
 			{
-				if( arg0.getKeyCode() == KeyEvent.VK_BACK_SPACE )
+				if( arg0.getKeyCode() == KeyEvent.VK_BACK_SPACE || arg0.getKeyCode() == KeyEvent.VK_DELETE )
 				{
 					if( stdAddPincode.getText().length() == 1 )
 					{
@@ -457,7 +448,7 @@ public class CompStudentReg
 			@Override
 			public void keyReleased(KeyEvent arg0)
 			{
-				if( arg0.getKeyCode() == KeyEvent.VK_BACK_SPACE )
+				if( arg0.getKeyCode() == KeyEvent.VK_BACK_SPACE || arg0.getKeyCode() == KeyEvent.VK_DELETE )
 				{
 					if( stdCorespAddPincode.getText().length() == 1 )
 					{
@@ -473,44 +464,20 @@ public class CompStudentReg
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				Date selectedDate = (Date) stdDOB.getModel().getValue();
-				if( stdFirstName.getText().equals("") || stdLastName.getText().equals("") || 
-						stdGender.getSelectedIndex() == 0 || selectedDate == null ||
-						stdEmail.getText().equals("") || stdMobNo.getText().equals("") || 
-						stdCorespAddCity.getSelectedIndex() == 0 )
+				if( !checkStd() )
 				{
-					JOptionPane.showMessageDialog(null, "Complete Personal Details");
 					return;
 				}
-				if( stdMobNo.getText().length() != 10 )
+				if( !checkStdAdd() )
 				{
-					JOptionPane.showMessageDialog(null, "Invalid Mobile Number");
 					return;
 				}
-				if( stdAddState.getSelectedIndex() == 0 || stdAddCity.getSelectedIndex() == 0 ||
-						stdAddHome.getText().equals("") || stdAddPincode.getText().equals("") )
+				if( !checkStdCorespAdd() )
 				{
-					JOptionPane.showMessageDialog(null, "Complete Postal Details");
-					return;
-				}
-				if( stdAddPincode.getText().length() != PIN_CODE )
-				{
-					JOptionPane.showMessageDialog(null, "Invalid Pin Code");
-					return;
-				}
-				if( stdCorespAddState.getSelectedIndex() == 0 || stdCorespAddCity.getSelectedIndex() == 0 ||
-						stdCorespAddHome.getText().equals("") || stdCorespAddPincode.getText().equals("") )
-				{
-					JOptionPane.showMessageDialog(null, "Complete Correspondence Postal Details");
-					return;
-				}
-				if( stdCorespAddPincode.getText().length() != PIN_CODE )
-				{
-					JOptionPane.showMessageDialog(null, "Invalid Pin Code");
 					return;
 				}
 				
-				CompStudentReg1 reg = new CompStudentReg1();
+				CompStudentReg1 reg = new CompStudentReg1(user);
 				reg.compStudentReg1.setVisible(true);
 				compStudentReg.dispose();
 			}
@@ -523,18 +490,71 @@ public class CompStudentReg
 		compStudentReg.setBounds(framex, framey, frameLength, frameheigth);
 		compStudentReg.setBackground(bgColor);
 		compStudentReg.getContentPane().setLayout(null);
-		compStudentReg.setVisible(true);
 	}
 	
-	private NumberFormatter returnFormatter(int maxallowed)
+	/////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////Utility Function's//////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////
+	private NumberFormatter returnFormatter(long maxallowed)
 	{
 		NumberFormat longFormat = NumberFormat.getIntegerInstance(Locale.getDefault());
 		longFormat.setGroupingUsed(false);
 		longFormat.setMaximumFractionDigits(0);
 		NumberFormatter numberFormatter = new NumberFormatter(longFormat);
-		numberFormatter.setMaximum(9999999999l);
+		numberFormatter.setMaximum(maxallowed);
 		numberFormatter.setAllowsInvalid(false);
 		
 		return numberFormatter;
+	}
+
+	private boolean checkStd()
+	{
+		Date selectedDate = (Date) stdDOB.getModel().getValue();
+		if( stdFirstName.getText().equals("") || stdLastName.getText().equals("") || 
+				stdGender.getSelectedIndex() == 0 || selectedDate == null ||
+				stdEmail.getText().equals("") || stdMobNo.getText().equals("") || 
+				stdCorespAddCity.getSelectedIndex() == 0 )
+		{
+			JOptionPane.showMessageDialog(null, "Complete Personal Details");
+			return false;
+		}
+		if( stdMobNo.getText().length() != 10 )
+		{
+			JOptionPane.showMessageDialog(null, "Invalid Mobile Number");
+			return false;
+		}
+		return true;
+	}
+	
+	private boolean checkStdAdd()
+	{
+		if( stdAddState.getSelectedIndex() == 0 || stdAddCity.getSelectedIndex() == 0 ||
+				stdAddHome.getText().equals("") || stdAddPincode.getText().equals("") )
+		{
+			JOptionPane.showMessageDialog(null, "Complete Postal Details");
+			return false;
+		}
+		if( stdAddPincode.getText().length() != PIN_CODE_LENGTH )
+		{
+			JOptionPane.showMessageDialog(null, "Invalid Pin Code");
+			return false;
+		}
+		return true;
+	}
+	
+	private boolean checkStdCorespAdd()
+	{
+		if( stdCorespAddState.getSelectedIndex() == 0 || stdCorespAddCity.getSelectedIndex() == 0 ||
+				stdCorespAddHome.getText().equals("") || stdCorespAddPincode.getText().equals("") )
+		{
+			JOptionPane.showMessageDialog(null, "Complete Correspondence Postal Details");
+			return false;
+		}
+		if( stdCorespAddPincode.getText().length() != PIN_CODE_LENGTH )
+		{
+			JOptionPane.showMessageDialog(null, "Invalid Pin Code");
+			return false;
+		}
+		return true;
 	}
 }

@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
+import beanClasses.User;
+
 public class CompFacultyReg
 {
 	private static final int framex = 100;
@@ -13,7 +15,7 @@ public class CompFacultyReg
 	private static final int frameheigth = 300;
 	private Color bgColor;
 	
-	private JFrame compFacultyReg;
+	public JFrame compFacultyReg;
 	
 	public static void main(String[] args)
 	{
@@ -21,13 +23,13 @@ public class CompFacultyReg
 		{
 			public void run()
 			{
-				CompFacultyReg window = new CompFacultyReg();
-				window.compFacultyReg.setVisible(true);
+				/*CompFacultyReg window = new CompFacultyReg();
+				window.compFacultyReg.setVisible(true);*/
 			}
 		});
 	}
 	
-	public CompFacultyReg()
+	public CompFacultyReg(User user)
 	{
 		bgColor = new Color(238, 238, 238);
 		initializeFrame();

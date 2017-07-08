@@ -20,9 +20,15 @@ import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.text.NumberFormatter;
 
+import beanClasses.User;
+
 public class CompStudentReg1
 {
-	private static final int MOB_DIGIT = 10;
+	private User user;
+	
+	
+	private static final long MOB_DIGIT = 9999999999l;
+	private static final int MOB_DIGIT_LENGTH = 10;
 	private static final int framex = 0;
 	private static final int framey = 0;
 	private static final int frameLength = 800;
@@ -70,8 +76,9 @@ public class CompStudentReg1
 	/**
 	 * @wbp.parser.entryPoint
 	 */
-	public CompStudentReg1()
+	public CompStudentReg1(User user)
 	{
+		this.user = user;
 		bgColor = new Color(238, 238, 238);
 		initializeFrame();
 		initComponents();
@@ -302,7 +309,7 @@ public class CompStudentReg1
 					return;
 				}
 				
-				CompStudentReg2 reg = new CompStudentReg2();
+				CompStudentReg2 reg = new CompStudentReg2(user);
 				reg.compStudentReg2.setVisible(true);
 				compStudentReg1.dispose();
 			}
@@ -313,7 +320,7 @@ public class CompStudentReg1
 			@Override
 			public void keyReleased(KeyEvent arg0)
 			{
-				if( arg0.getKeyCode() == KeyEvent.VK_BACK_SPACE )
+				if( arg0.getKeyCode() == KeyEvent.VK_BACK_SPACE || arg0.getKeyCode() == KeyEvent.VK_DELETE )
 				{
 					if( stdFatherMobNo.getText().length() == 1 )
 					{
@@ -327,7 +334,7 @@ public class CompStudentReg1
 			@Override
 			public void keyReleased(KeyEvent arg0)
 			{
-				if( arg0.getKeyCode() == KeyEvent.VK_BACK_SPACE )
+				if( arg0.getKeyCode() == KeyEvent.VK_BACK_SPACE || arg0.getKeyCode() == KeyEvent.VK_DELETE )
 				{
 					if( stdMotherMobNo.getText().length() == 1 )
 					{
@@ -346,6 +353,9 @@ public class CompStudentReg1
 		compStudentReg1.getContentPane().setLayout(null);
 	}
 	
+	/////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////Utility Function's//////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////
 	private boolean checkFather()
 	{
 		if( stdFatherFirstName.getText().equals("") || stdFatherLastName.getText().equals("") ||
@@ -355,7 +365,7 @@ public class CompStudentReg1
 			JOptionPane.showMessageDialog(null, "Complete Father's Details");
 			return false;
 		}
-		if( stdFatherMobNo.getText().length() != 10 )
+		if( stdFatherMobNo.getText().length() != MOB_DIGIT_LENGTH )
 		{
 			JOptionPane.showMessageDialog(null, "Invalid Mobile Number");
 			return false;
@@ -368,10 +378,10 @@ public class CompStudentReg1
 				stdMotherMobNo.getText().equals("") || stdMotherEmail.getText().equals("") ||
 				stdMotherOccupation.getSelectedIndex() == 0 )
 		{
-			JOptionPane.showMessageDialog(null, "Complete Father's Details");
+			JOptionPane.showMessageDialog(null, "Complete Mother's Details");
 			return false;
 		}
-		if( stdMotherMobNo.getText().length() != 10 )
+		if( stdMotherMobNo.getText().length() != MOB_DIGIT_LENGTH )
 		{
 			JOptionPane.showMessageDialog(null, "Invalid Mobile Number");
 			return false;
@@ -379,13 +389,13 @@ public class CompStudentReg1
 		return true;
 	}
 	
-	private NumberFormatter returnFormatter(int maxallowed)
+	private NumberFormatter returnFormatter(long maxallowed)
 	{
 		NumberFormat longFormat = NumberFormat.getIntegerInstance(Locale.getDefault());
 		longFormat.setGroupingUsed(false);
 		longFormat.setMaximumFractionDigits(0);
 		NumberFormatter numberFormatter = new NumberFormatter(longFormat);
-		numberFormatter.setMaximum(9999999999l);
+		numberFormatter.setMaximum(maxallowed);
 		numberFormatter.setAllowsInvalid(false);
 		
 		return numberFormatter;

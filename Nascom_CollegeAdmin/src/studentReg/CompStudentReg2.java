@@ -2,28 +2,40 @@ package studentReg;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.util.Locale;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.text.NumberFormatter;
 
+import beanClasses.User;
 import extraClasses.RegisterUtilityFunctions;
+import userRegLog.RegisterUser;
 
 public class CompStudentReg2
 {
-	private final static int DIGITS_ROLL = 10;
-	private final static int DIGITS_PER = 10;
+	private User user;
+	
+	
+	private final static long DIGITS_ROLL = 9999999l;
+	private final static long DIGITS_PER = 100l;
 	private static final int framex = 0;
 	private static final int framey = 0;
 	private static final int frameLength = 800;
-	private static final int frameheigth = 500;
+	private static final int frameheigth = 400;
 	private Color bgColor;
 	
 	public JFrame compStudentReg2;
@@ -68,12 +80,12 @@ public class CompStudentReg2
 	
 	private JButton stdRegSubmit;
 	
-	
 	/**
 	 * @wbp.parser.entryPoint
 	 */
-	public CompStudentReg2()
+	public CompStudentReg2( User user)
 	{
+		this.user = user;
 		bgColor = new Color(238, 238, 238);
 		initializeFrame();
 		initComponents();
@@ -125,16 +137,14 @@ public class CompStudentReg2
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void initComponents()
 	{
-		String[] passingYrChoice = RegisterUtilityFunctions.getPassingYr();
-		
 		//////////////////////////////////////////////////////////////////
 		////////////////////// FOURTH SECTION/////////////////////////////
 		//////////////////////////////////////////////////////////////////
 		section5Header = new JTextPane();
 		section5Header.setFont(new Font("Dialog", Font.BOLD, 16));
-		section5Header.setBounds(20, 30, 150, 20);
+		section5Header.setBounds(20, 30, 180, 20);
 		section5Header.setBackground(bgColor);
-		section5Header.setText("Parental Details");
+		section5Header.setText("Educational Details");
 		section5Header.setFocusable(false);
 		section5Header.setEditable(false);
 		section5Separator = new JSeparator(SwingConstants.HORIZONTAL);
@@ -154,26 +164,25 @@ public class CompStudentReg2
 		stdClsXRollNoTextPane = new JTextPane();
 		stdClsXRollNoTextPane.setBounds(20, 93, 80, 20);
 		stdClsXRollNoTextPane.setBackground(bgColor);
-		stdClsXRollNoTextPane.setText("First Name");
+		stdClsXRollNoTextPane.setText("Roll No.");
 		stdClsXRollNoTextPane.setFocusable(false);
 		stdClsXRollNoTextPane.setEditable(false);
 		stdClsXRollNo = new JTextField();
 		stdClsXRollNo.setBounds(110, 93, 130, 20);
-		stdClsXRollNo.setColumns(10);
 
 		stdClsXPassingYrTextPane = new JTextPane();
 		stdClsXPassingYrTextPane.setBounds(270, 93, 90, 20);
 		stdClsXPassingYrTextPane.setBackground(bgColor);
-		stdClsXPassingYrTextPane.setText("Middle Name");
+		stdClsXPassingYrTextPane.setText("Passing Year");
 		stdClsXPassingYrTextPane.setFocusable(false);
 		stdClsXPassingYrTextPane.setEditable(false);
-		stdClsXPassingYr = new JComboBox(passingYrChoice);
+		stdClsXPassingYr = new JComboBox(RegisterUtilityFunctions.getPassingYr());
 		stdClsXPassingYr.setBounds(360, 93, 130, 20);
 
 		stdClsXSchoolNameTextPane = new JTextPane();
 		stdClsXSchoolNameTextPane.setBounds(520, 93, 80, 20);
 		stdClsXSchoolNameTextPane.setBackground(bgColor);
-		stdClsXSchoolNameTextPane.setText("Last Name");
+		stdClsXSchoolNameTextPane.setText("School Name");
 		stdClsXSchoolNameTextPane.setFocusable(false);
 		stdClsXSchoolNameTextPane.setEditable(false);
 		stdClsXSchoolName = new JTextField();
@@ -184,7 +193,7 @@ public class CompStudentReg2
 		stdClsXBoardTextPane = new JTextPane();
 		stdClsXBoardTextPane.setBounds(20, 133, 80, 20);
 		stdClsXBoardTextPane.setBackground(bgColor);
-		stdClsXBoardTextPane.setText("Mobile");
+		stdClsXBoardTextPane.setText("Board");
 		stdClsXBoardTextPane.setFocusable(false);
 		stdClsXBoardTextPane.setEditable(false);
 		stdClsXBoard = new JComboBox(RegisterUtilityFunctions.getBoard());
@@ -193,7 +202,7 @@ public class CompStudentReg2
 		stdClsXMediumStudyTextPane = new JTextPane();
 		stdClsXMediumStudyTextPane.setBounds(270, 133, 80, 20);
 		stdClsXMediumStudyTextPane.setBackground(bgColor);
-		stdClsXMediumStudyTextPane.setText("Occupation");
+		stdClsXMediumStudyTextPane.setText("Medium");
 		stdClsXMediumStudyTextPane.setFocusable(false);
 		stdClsXMediumStudyTextPane.setEditable(false);
 		stdClsXMediumStudy = new JComboBox(RegisterUtilityFunctions.getMedium());
@@ -202,11 +211,10 @@ public class CompStudentReg2
 		stdClsXPercnetageTextPane = new JTextPane();
 		stdClsXPercnetageTextPane.setBounds(520, 133, 80, 20);
 		stdClsXPercnetageTextPane.setBackground(bgColor);
-		stdClsXPercnetageTextPane.setText("E-Mail");
+		stdClsXPercnetageTextPane.setText("Percentage");
 		stdClsXPercnetageTextPane.setFocusable(false);
 		stdClsXPercnetageTextPane.setEditable(false);
-		stdClsXPercnetage = new JFormattedTextField(DIGITS_PER);
-		stdClsXPercnetage.setColumns(10);
+		stdClsXPercnetage = new JFormattedTextField(returnFormatter(DIGITS_PER));
 		stdClsXPercnetage.setBounds(610, 133, 130, 20);
 
 		// Class XII Section.
@@ -223,37 +231,35 @@ public class CompStudentReg2
 		stdClsXIIRollNoTextPane = new JTextPane();
 		stdClsXIIRollNoTextPane.setBounds(20, 205, 80, 20);
 		stdClsXIIRollNoTextPane.setBackground(bgColor);
-		stdClsXIIRollNoTextPane.setText("First Name");
+		stdClsXIIRollNoTextPane.setText("Roll No.");
 		stdClsXIIRollNoTextPane.setFocusable(false);
 		stdClsXIIRollNoTextPane.setEditable(false);
-		stdClsXIIRollNo = new JFormattedTextField(DIGITS_ROLL);
+		stdClsXIIRollNo = new JFormattedTextField(returnFormatter(DIGITS_ROLL));
 		stdClsXIIRollNo.setBounds(110, 205, 130, 20);
-		stdClsXIIRollNo.setColumns(10);
 
 		stdClsXIIPassingYrTextPane = new JTextPane();
 		stdClsXIIPassingYrTextPane.setBounds(270, 205, 90, 20);
 		stdClsXIIPassingYrTextPane.setBackground(bgColor);
-		stdClsXIIPassingYrTextPane.setText("Middle Name");
+		stdClsXIIPassingYrTextPane.setText("Passing Year");
 		stdClsXIIPassingYrTextPane.setFocusable(false);
 		stdClsXIIPassingYrTextPane.setEditable(false);
-		stdClsXIIPassingYr = new JComboBox(passingYrChoice);
+		stdClsXIIPassingYr = new JComboBox(RegisterUtilityFunctions.getPassingYr());
 		stdClsXIIPassingYr.setBounds(360, 205, 130, 20);
 
 		stdClsXIISchoolNameTextPane = new JTextPane();
 		stdClsXIISchoolNameTextPane.setBounds(520, 205, 80, 20);
 		stdClsXIISchoolNameTextPane.setBackground(bgColor);
-		stdClsXIISchoolNameTextPane.setText("Last Name");
+		stdClsXIISchoolNameTextPane.setText("School Name");
 		stdClsXIISchoolNameTextPane.setFocusable(false);
 		stdClsXIISchoolNameTextPane.setEditable(false);
 		stdClsXIISchoolName = new JTextField();
-		stdClsXIISchoolName.setColumns(10);
 		stdClsXIISchoolName.setBounds(610, 205, 130, 20);
 
 		// Second Row
 		stdClsXIIBoardTextPane = new JTextPane();
 		stdClsXIIBoardTextPane.setBounds(20, 245, 80, 20);
 		stdClsXIIBoardTextPane.setBackground(bgColor);
-		stdClsXIIBoardTextPane.setText("Mobile");
+		stdClsXIIBoardTextPane.setText("Board");
 		stdClsXIIBoardTextPane.setFocusable(false);
 		stdClsXIIBoardTextPane.setEditable(false);
 		stdClsXIIBoard = new JComboBox(RegisterUtilityFunctions.getBoard());
@@ -262,7 +268,7 @@ public class CompStudentReg2
 		stdClsXIIMediumTextPane = new JTextPane();
 		stdClsXIIMediumTextPane.setBounds(270, 245, 80, 20);
 		stdClsXIIMediumTextPane.setBackground(bgColor);
-		stdClsXIIMediumTextPane.setText("Occupation");
+		stdClsXIIMediumTextPane.setText("Medium Of Study");
 		stdClsXIIMediumTextPane.setFocusable(false);
 		stdClsXIIMediumTextPane.setEditable(false);
 		stdClsXIIMedium = new JComboBox(RegisterUtilityFunctions.getMedium());
@@ -271,19 +277,103 @@ public class CompStudentReg2
 		stdClsXIIPercnetageTextPane = new JTextPane();
 		stdClsXIIPercnetageTextPane.setBounds(520, 245, 80, 20);
 		stdClsXIIPercnetageTextPane.setBackground(bgColor);
-		stdClsXIIPercnetageTextPane.setText("E-Mail");
+		stdClsXIIPercnetageTextPane.setText("Percentage");
 		stdClsXIIPercnetageTextPane.setFocusable(false);
 		stdClsXIIPercnetageTextPane.setEditable(false);
 		stdClsXIIPercnetage = new JFormattedTextField(returnFormatter(DIGITS_PER));
-		stdClsXIIPercnetage.setColumns(10);
 		stdClsXIIPercnetage.setBounds(610, 245, 130, 20);
+		
+		
+		stdRegSubmit = new JButton("Register");
+		stdRegSubmit.setBounds(((frameLength/2)-60), frameheigth - 70, 120, 25);
 	}
 	
 	private void initListeners()
 	{
+		stdRegSubmit.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
+				if( !checkX() )
+				{
+					return;
+				}
+				if( !checkXII() )
+				{
+					return;
+				}
+				
+				// Entry to DB Logic
+                RegisterUser reg = new RegisterUser(user);
+                try
+                {
+                	if( reg.registerUser() )
+                	{
+	                    System.out.println("User Registered");
+	                	JOptionPane.showMessageDialog(null, "User Registered");
+	                }
+	                else
+	                {
+	                	JOptionPane.showMessageDialog(null, "User Not Registered");
+	                }
+                }
+                catch(ClassNotFoundException e)
+                {
+                	JOptionPane.showMessageDialog(compStudentReg2, "User Not Registered Internal Application Error!!");
+                	System.out.println("JDBC connector Class Not Found.");
+				}
+                catch(SQLException e)
+                {
+                	JOptionPane.showMessageDialog(compStudentReg2, "User Not Registered Internal Application Error!!");
+                	System.out.println("Exception --> "+e.getMessage());
+				}
+			}
+		});
 		
+		stdClsXIIRollNo.addKeyListener(new KeyAdapter()
+		{
+			@Override
+			public void keyPressed(KeyEvent arg0)
+			{
+				if( arg0.getKeyCode() == KeyEvent.VK_BACK_SPACE || arg0.getKeyCode() == KeyEvent.VK_DELETE )
+				{
+					if( stdClsXIIRollNo.getText().length() == 1 )
+					{
+						stdClsXIIRollNo.setText("0");
+					}
+				}
+			}
+		});
+		stdClsXIIPercnetage.addKeyListener(new KeyAdapter()
+		{
+			@Override
+			public void keyPressed(KeyEvent arg0)
+			{
+				if( arg0.getKeyCode() == KeyEvent.VK_BACK_SPACE || arg0.getKeyCode() == KeyEvent.VK_DELETE )
+				{
+					if( stdClsXIIPercnetage.getText().length() == 1 )
+					{
+						stdClsXIIPercnetage.setText("0");
+					}
+				}
+			}
+		});
+		stdClsXPercnetage.addKeyListener(new KeyAdapter()
+		{
+			@Override
+			public void keyPressed(KeyEvent arg0)
+			{
+				if( arg0.getKeyCode() == KeyEvent.VK_BACK_SPACE || arg0.getKeyCode() == KeyEvent.VK_DELETE )
+				{
+					if( stdClsXPercnetage.getText().length() == 1 )
+					{
+						stdClsXPercnetage.setText("0");
+					}
+				}
+			}
+		});
 	}
-	
+
 	private void initializeFrame()
 	{
 		compStudentReg2 = new JFrame("Student Registration Finalize");
@@ -292,15 +382,83 @@ public class CompStudentReg2
 		compStudentReg2.getContentPane().setLayout(null);
 	}
 	
-	private NumberFormatter returnFormatter(int maxallowed)
+	/////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////Utility Function's//////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////
+	private NumberFormatter returnFormatter(long maxallowed)
 	{
 		NumberFormat longFormat = NumberFormat.getIntegerInstance(Locale.getDefault());
 		longFormat.setGroupingUsed(false);
-		longFormat.setMaximumFractionDigits(0);
+		longFormat.setMaximumFractionDigits(2);
 		NumberFormatter numberFormatter = new NumberFormatter(longFormat);
-		numberFormatter.setMaximum(9999999999l);
+		//numberFormatter.setValueClass(Integer.class);
+		numberFormatter.setMaximum(maxallowed);
 		numberFormatter.setAllowsInvalid(false);
 		
 		return numberFormatter;
+	}
+
+	private boolean checkX()
+	{
+		boolean checkFlag = true;
+		RegisterUtilityFunctions errorUtility = new RegisterUtilityFunctions();
+		
+		if( stdClsXRollNo.getText().equals("") || stdClsXPassingYr.getSelectedIndex() == 0 ||
+				stdClsXSchoolName.getText().equals("") || stdClsXBoard.getSelectedIndex() == 0 ||
+				stdClsXMediumStudy.getSelectedIndex() == 0 || stdClsXPercnetage.getText().equals(""))
+		{
+			JOptionPane.showMessageDialog(null, "Complete Class X Details.");
+			return false;
+		}
+		if( stdClsXRollNo.getText().length() < 7 )
+		{
+			errorUtility.storeError("Invalid Class X Roll Number.");
+			checkFlag = false;
+		}
+		if( Integer.parseInt(stdClsXPercnetage.getText()) > 100 || Integer.parseInt(stdClsXPercnetage.getText()) < 30 )
+		{
+			errorUtility.storeError("Invalid Class X percentage.");
+			checkFlag = false;
+		}
+		if( checkFlag == false )
+		{
+			JOptionPane.showMessageDialog(null, errorUtility.getErrors());
+			return false;
+		}
+		return true;
+	}
+	private boolean checkXII()
+	{
+		boolean checkFlag = true;
+		RegisterUtilityFunctions errorUtility = new RegisterUtilityFunctions();
+		
+		if( stdClsXIIRollNo.getText().equals("") || stdClsXIIPassingYr.getSelectedIndex() == 0 ||
+				stdClsXIISchoolName.getText().equals("") || stdClsXIIBoard.getSelectedIndex() == 0 ||
+				stdClsXIIMedium.getSelectedIndex() == 0 || stdClsXIIPercnetage.getText().equals(""))
+		{
+			JOptionPane.showMessageDialog(null, "Complete Class XII Details");
+			return false;
+		}
+		if( stdClsXIIRollNo.getText().length() != 7 )
+		{
+			errorUtility.storeError("Invalid Class XII Roll Number.");
+			checkFlag = false;
+		}
+		if( stdClsXIIPassingYr.getSelectedIndex() <= stdClsXPassingYr.getSelectedIndex() )
+		{
+			errorUtility.storeError("Class XII passing year has to be greater then Class X's passing year.");
+			checkFlag = false;
+		}
+		if( Integer.parseInt(stdClsXIIPercnetage.getText()) > 100 || Integer.parseInt(stdClsXIIPercnetage.getText()) < 30 )
+		{
+			errorUtility.storeError("Invalid Class XII percentage.");
+			checkFlag = false;
+		}
+		if( checkFlag == false )
+		{
+			JOptionPane.showMessageDialog(null, errorUtility.getErrors());
+			return false;
+		}
+		return true;
 	}
 }

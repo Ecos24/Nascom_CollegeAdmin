@@ -5,8 +5,30 @@ import java.util.Calendar;
 
 public class RegisterUtilityFunctions
 {
-	private static String[] mediums = {"English", "Hindi"};
-	private static String[] boards = {"CBSE", "ICSE", "State Board"};
+	private static String[] mediums = {"Select", "English", "Hindi"};
+	private static String[] boards = {"Select", "CBSE", "ICSE", "State Board"};
+	private ArrayList<String> errorMsg;
+	
+	public RegisterUtilityFunctions()
+	{
+		errorMsg = new ArrayList<>();
+	}
+	
+	public void storeError(String error)
+	{
+		errorMsg.add(error);
+	}
+	
+	public String getErrors()
+	{
+		String error = "";
+		for (String string : errorMsg)
+		{
+			error = error.concat(string);
+			error = error.concat("\n");
+		}
+		return error;
+	}
 	
 	public static String[] getPassingYr()
 	{
@@ -14,6 +36,7 @@ public class RegisterUtilityFunctions
 		Calendar can = Calendar.getInstance();
 		int curyr = can.get(Calendar.YEAR);
 		int base = curyr - 8;
+		pasYr.add("Select");
 		
 		for( int i = base ; i<= curyr ; i++ )
 			pasYr.add(String.valueOf(i));

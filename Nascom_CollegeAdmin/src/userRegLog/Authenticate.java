@@ -24,7 +24,7 @@ public class Authenticate
     {
     	Connection con = GetDBConnection.getConnection();
     	
-    	String insertQuesry = "SELECT * FROM USERS WHERE username = ?;";
+    	String insertQuesry = "SELECT username, password, usertype FROM USERS WHERE username = ?;";
         PreparedStatement prest = con.prepareStatement(insertQuesry);
         prest.setString(1, this.user.getUserName());
         ResultSet userResultSet = prest.executeQuery();

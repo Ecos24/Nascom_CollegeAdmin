@@ -3,7 +3,6 @@ package swingGUIPack;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -11,7 +10,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import beanClasses.User;
-import userRegLog.RegisterUser;
+import facultyReg.CompFacultyReg;
+import studentReg.CompStudentReg;
 import javax.swing.JComboBox;
 import java.awt.Color;
 
@@ -45,6 +45,7 @@ public class Register
 		bgColor = new Color(238, 238, 238);
 		initializeFrame();
 		initComponents();
+		initListeners();
 		associateFrameComponents();
 	}
 	
@@ -98,20 +99,24 @@ public class Register
 		
 		Register = new JButton("Register");
 		Register.setBounds(147, 198, 131, 20);
-		
-		/////////////////////////////////////////////////////////////////////////
-		//////////////////////////Listner's///////////////////////////////////////
-		/////////////////////////////////////////////////////////////////////////
+	}
+
+	/////////////////////////////////////////////////////////////////////////
+	///////////////////////////Listner's/////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////
+	private void initListeners()
+	{
 		profileType.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				if( profileType.getItemAt(profileType.getSelectedIndex()).toString().toLowerCase().equals("student") )
+				if (profileType.getItemAt(profileType.getSelectedIndex()).toString().toLowerCase().equals("student"))
 				{
-					// Code to fect next ID from DB.
+					// Code to fetch next ID from DB.
 					userName.setText("STD2014bbs");
 				}
-				else if( profileType.getItemAt(profileType.getSelectedIndex()).toString().toLowerCase().equals("faculty") )
+				else if (profileType.getItemAt(profileType.getSelectedIndex()).toString().toLowerCase()
+						.equals("faculty"))
 				{
 					userName.setText("FAC2014bbs");
 				}
@@ -124,41 +129,31 @@ public class Register
 				String userN = userName.getText().toLowerCase();
 				String pass = String.valueOf(password.getPassword());
 				String userT = profileType.getItemAt(profileType.getSelectedIndex()).toString().toLowerCase();
-				if( !userN.equals("") &&  !pass.equals("") )
+				if(!userN.equals("") && !pass.equals(""))
 				{
 					User user = new User();
-	                user.setUserName(userN);
-	                user.setPassword(pass);
-	                user.setUserType( userT );
-	                RegisterUser reg = new RegisterUser(user);
-	                try
-	                {
-	                	if( reg.registerUser() )
-	                	{
-		                    System.out.println("User Registered");
-		                	JOptionPane.showMessageDialog(null, "User Registered");
-		                }
-		                else
-		                {
-		                	JOptionPane.showMessageDialog(null, "User Not Registered");
-		                }
-	                }
-	                catch(ClassNotFoundException e)
-	                {
-	                	JOptionPane.showMessageDialog(regFrame, "User Not Registered Internal Application Error!!");
-	                	System.out.println("JDBC connector Class Not Found.");
+					user.setUserName(userN);
+					user.setPassword(pass);
+					user.setUserType(userT);
+
+					if(user.getUserType().equals("student"))
+					{
+						CompStudentReg reg = new CompStudentReg(user);
+						reg.compStudentReg.setVisible(true);
+						regFrame.dispose();
 					}
-	                catch(SQLException e)
-	                {
-	                	JOptionPane.showMessageDialog(regFrame, "User Not Registered Internal Application Error!!");
-	                	System.out.println("Exception --> "+e.getMessage());
+					else if(user.getUserType().equals("faculty"))
+					{
+						CompFacultyReg reg = new CompFacultyReg(user);
+						reg.compFacultyReg.setVisible(true);
+						regFrame.dispose();
 					}
 				}
-				else if( userN.equals("") )
+				else if(userN.equals(""))
 				{
 					JOptionPane.showMessageDialog(regFrame, "Please provide Profile Type!!");
 				}
-				else if( pass.equals("") )
+				else if(pass.equals(""))
 				{
 					JOptionPane.showMessageDialog(regFrame, "Please provide Password!!");
 				}
