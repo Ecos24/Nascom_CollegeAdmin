@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.NumberFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -33,6 +35,7 @@ import beanClasses.User;
 import extendedClasses.DateLabelFormatter;
 import extraClasses.CityReadFromFile;
 import extraClasses.StatesReadFromFile;
+import memberGUI.admin.MainGUI;
 
 public class CompStudentReg
 {
@@ -179,7 +182,6 @@ public class CompStudentReg
 		
 		compStudentReg.getRootPane().setDefaultButton(stdRegNextFrame);
 		
-		compStudentReg.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		compStudentReg.setResizable(false);
 	}
 	
@@ -539,6 +541,19 @@ public class CompStudentReg
 		compStudentReg.setBounds(framex, framey, frameLength, frameheigth);
 		compStudentReg.setBackground(bgColor);
 		compStudentReg.getContentPane().setLayout(null);
+		compStudentReg.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+		compStudentReg.addWindowListener(new WindowAdapter()
+			{
+				@Override
+				public void windowClosing(WindowEvent e)
+				{
+					MainGUI admin = new MainGUI();
+					admin.adminMainGUI.setVisible(true);
+					super.windowClosing(e);
+				}
+				
+			});
 	}
 	
 	/////////////////////////////////////////////////////////////////////////////////

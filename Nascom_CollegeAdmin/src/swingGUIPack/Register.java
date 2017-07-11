@@ -1,8 +1,10 @@
 package swingGUIPack;
 
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -11,13 +13,14 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import beanClasses.User;
 import facultyReg.CompFacultyReg;
+import memberGUI.admin.MainGUI;
 import studentReg.CompStudentReg;
 import javax.swing.JComboBox;
 import java.awt.Color;
 
 public class Register
 {
-	private JFrame regFrame;
+	public JFrame regFrame;
 	private JButton Register;
 	private JPasswordField password;
 	private JTextField userName;
@@ -27,18 +30,6 @@ public class Register
 	private JTextPane passwordTextPane;
 	private JTextPane userTypeTextPane;
 	private Color bgColor;
-
-	public static void main(String[] args)
-	{
-		EventQueue.invokeLater(new Runnable()
-		{
-			public void run()
-			{
-				Register window = new Register();
-				window.regFrame.setVisible(true);
-			}
-		});
-	}
 
 	public Register()
 	{
@@ -167,7 +158,18 @@ public class Register
 		regFrame.setBounds(100, 100, 450, 300);
 		regFrame.setBackground(bgColor);
 		regFrame.getContentPane().setLayout(null);
-		regFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		regFrame.setVisible(true);
+		regFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+		regFrame.addWindowListener(new WindowAdapter()
+			{
+				@Override
+				public void windowClosing(WindowEvent e)
+				{
+					MainGUI admin = new MainGUI();
+					admin.adminMainGUI.setVisible(true);
+					super.windowClosing(e);
+				}
+				
+			});
 	}
 }

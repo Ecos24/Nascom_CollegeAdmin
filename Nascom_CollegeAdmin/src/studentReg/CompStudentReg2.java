@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -23,6 +25,7 @@ import javax.swing.text.NumberFormatter;
 
 import beanClasses.User;
 import extraClasses.RegisterUtilityFunctions;
+import memberGUI.admin.MainGUI;
 import userRegLog.RegisterUser;
 
 public class CompStudentReg2
@@ -130,7 +133,6 @@ public class CompStudentReg2
 		compStudentReg2.getContentPane().add(stdRegSubmit);
 		compStudentReg2.getRootPane().setDefaultButton(stdRegSubmit);
 
-		compStudentReg2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		compStudentReg2.setResizable(false);
 	}
 	
@@ -290,6 +292,7 @@ public class CompStudentReg2
 	
 	private void initListeners()
 	{
+		// Main Button Listener.
 		stdRegSubmit.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
@@ -327,6 +330,11 @@ public class CompStudentReg2
                 	JOptionPane.showMessageDialog(compStudentReg2, "User Not Registered Internal Application Error!!");
                 	System.out.println("Exception --> "+e.getMessage());
 				}
+                
+                // Redirect to Admin UI.
+                MainGUI admin = new MainGUI();
+                admin.adminMainGUI.setVisible(true);
+                compStudentReg2.dispose();
 			}
 		});
 		
@@ -380,6 +388,19 @@ public class CompStudentReg2
 		compStudentReg2.setBounds(framex, framey, frameLength, frameheigth);
 		compStudentReg2.setBackground(bgColor);
 		compStudentReg2.getContentPane().setLayout(null);
+		compStudentReg2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+		compStudentReg2.addWindowListener(new WindowAdapter()
+			{
+				@Override
+				public void windowClosing(WindowEvent e)
+				{
+					MainGUI admin = new MainGUI();
+					admin.adminMainGUI.setVisible(true);
+					super.windowClosing(e);
+				}
+				
+			});
 	}
 	
 	/////////////////////////////////////////////////////////////////////////////////

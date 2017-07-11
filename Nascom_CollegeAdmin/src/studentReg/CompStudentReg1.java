@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -21,6 +23,7 @@ import javax.swing.SwingConstants;
 import javax.swing.text.NumberFormatter;
 
 import beanClasses.User;
+import memberGUI.admin.MainGUI;
 
 public class CompStudentReg1
 {
@@ -123,7 +126,6 @@ public class CompStudentReg1
 		compStudentReg1.getContentPane().add(stdRegNextFrame);
 		compStudentReg1.getRootPane().setDefaultButton(stdRegNextFrame);
 		
-		compStudentReg1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		compStudentReg1.setResizable(false);
 	}
 	
@@ -351,6 +353,19 @@ public class CompStudentReg1
 		compStudentReg1.setBounds(framex, framey, frameLength, frameheigth);
 		compStudentReg1.setBackground(bgColor);
 		compStudentReg1.getContentPane().setLayout(null);
+		compStudentReg1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+		compStudentReg1.addWindowListener(new WindowAdapter()
+			{
+				@Override
+				public void windowClosing(WindowEvent e)
+				{
+					MainGUI admin = new MainGUI();
+					admin.adminMainGUI.setVisible(true);
+					super.windowClosing(e);
+				}
+				
+			});
 	}
 	
 	/////////////////////////////////////////////////////////////////////////////////
