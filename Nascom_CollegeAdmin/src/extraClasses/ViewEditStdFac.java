@@ -8,31 +8,67 @@ import java.sql.Statement;
 import javax.swing.table.DefaultTableModel;
 
 import dbConnection.GetDBConnection;
+import dbConnection.ReadProjectProperties;
 
 public class ViewEditStdFac
 {
-	public static void populateTable(DefaultTableModel model)
+	public static void populateTable(DefaultTableModel model, boolean facFlag)
 	{
-		Object[] row = new Object[2];
+		String[] row = new String[2];
 		
         ResultSet userResultSet;
 		try
 		{
 			Connection con = GetDBConnection.getConnection();
-	    	String getQuery = "SELECT username, password FROM USERS;";
+	    	String getQuery = "SELECT userid, usertype, password FROM "+ReadProjectProperties.getProp("TNUSERS")+";";
 	    	Statement st = con.createStatement();
+	    	Statement stfacstd = con.createStatement();
 			userResultSet = st.executeQuery(getQuery);
-			
+			ResultSet facstdResultSet;
 	        while( userResultSet.next() )
 	        {
-	        	row[0] = userResultSet.getString("username");
-	        	row[1] = userResultSet.getString("password");
+	        	if( facFlag )
+	        	{
+	        		if( userResultSet.getString("usertype").equals("faculty") )
+	        		{
+	        			row[0] = userResultSet.getString("userid");
+	        			String query = "SELECT fname, mname, lname FROM "+
+	        					ReadProjectProperties.getProp("TNSTDPERSONALDETAILS")+ " WHERE stdid = '"+
+	        					row[0]+ "';";
+	        			facstdResultSet = stfacstd.executeQuery(query);
+	        			while( facstdResultSet.next() )
+	        			{
+	        				String name = facstdResultSet.getString("fname")+facstdResultSet.getString("mname")+facstdResultSet.getString("lname");
+	        				row[1] = name;
+	        			}
+	        		}
+	        	}
+	        	else
+	        	{
+	        		if( userResultSet.getString("usertype").toLowerCase().equals("student") )
+	        		{
+	        			row[0] = userResultSet.getString("userid");
+	        			String query = "SELECT fname, mname, lname FROM "+
+	        					ReadProjectProperties.getProp("TNSTDPERSONALDETAILS")+ " WHERE stdid = '"+
+	        					row[0]+ "';";
+	        			facstdResultSet = stfacstd.executeQuery(query);
+	        			while( facstdResultSet.next() )
+	        			{
+	        				String name;
+	        				if(facstdResultSet.getString("mname") == null)
+	        					name = facstdResultSet.getString("fname")+" "+facstdResultSet.getString("lname");
+	        				else
+	        					name = facstdResultSet.getString("fname")+" "+facstdResultSet.getString("mname")+" "+facstdResultSet.getString("lname");
+	        				row[1] = name;
+	        			}
+	        		}
+	        	}
 				model.addRow(row);
 	        }
 		}
 		catch(SQLException | ClassNotFoundException e)
 		{
-			System.out.println("Exception Occured --> "+e.getMessage());
+			System.out.println(e.getClass().getName()+" Exception Occured --> "+e.getMessage());
 		}
 	}
 }

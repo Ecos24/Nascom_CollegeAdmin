@@ -1,11 +1,11 @@
 package dbConnection;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+
+import tableCreateQuery.CommonQuerys;
+import tableCreateQuery.StudentQuerys;
 
 /**
  *  Class to Create Connection to DataBase.
@@ -23,6 +23,22 @@ public class GetDBConnection
         {
             Class.forName(ReadProjectProperties.getProp("driver"));
             con = DriverManager.getConnection(url,ReadProjectProperties.getProp("username"),ReadProjectProperties.getProp("password"));
+            System.out.println("Connected");
+            
+            //////// COMMON TABLES //////// 
+            // Check Users Table.
+            DBUtilityFunctions.checkTableForReg(con ,ReadProjectProperties.getProp("TNUSERS"), CommonQuerys.getUsersCreateQuery());
+            // Check Address Table.
+            DBUtilityFunctions.checkTableForReg(con ,ReadProjectProperties.getProp("TNADDRESS"), CommonQuerys.getAddressCreateQuery());
+            // Check Guardian Table.
+            DBUtilityFunctions.checkTableForReg(con ,ReadProjectProperties.getProp("TNGUARDIAN"), CommonQuerys.getGuardianCreateQuery());
+            // Check Education Table.
+            DBUtilityFunctions.checkTableForReg(con ,ReadProjectProperties.getProp("TNEDUCATION"), CommonQuerys.getEducationCreateQuery());
+            //////// STUDENT TABLES ////////
+            DBUtilityFunctions.checkTableForReg(con ,ReadProjectProperties.getProp("TNSTDPERSONALDETAILS"), StudentQuerys.getStudentPersonalCreateQuery());
+            //////// FACULTY TABLES ////////
+            
+            System.out.println("All well with DB");
         }
         catch(ClassNotFoundException e)
         {
@@ -30,9 +46,8 @@ public class GetDBConnection
         }
         catch(SQLException e)
         {
-            System.out.println("SQLException Happened while establishing connection "+e.getMessage());
+            System.out.println("SQLException Happened while establishing connection !!"+e.getMessage());
         }
-        System.out.println("Connected");
     }
 
     /**
@@ -45,106 +60,13 @@ public class GetDBConnection
         return con;
     }
 
+    /**
+     * Function closes current Connection.
+     * @throws SQLException
+     */
     public static void closeConnection() throws SQLException
     {
         con.close();
         System.out.println("Connection Closed.");
-    }
-
-    /**
-     * Function Checks for given table Name in database. It drops & recreate the table if present
-     * @param createTableQuery is used for creating table
-     * @throws SQLException is thrown
-     */
-    public static void checkTable( String tableName, String createTableQuery) throws SQLException
-    {
-        if(con.isValid(0))
-        {
-            Statement stmt = con.createStatement();
-            DatabaseMetaData md = con.getMetaData();
-            ResultSet rs = md.getTables(null, null, "%", null);
-            if( !rs.next() )
-            {
-                stmt.executeUpdate(createTableQuery);
-                stmt.close();
-                return;
-            }
-            else
-            {
-                do
-                {
-                    if( tableName.equals(rs.getString(3)) )
-                    {
-                        String query = "drop table "+ tableName +";";
-                        stmt.executeUpdate(query);
-                        stmt.executeUpdate(createTableQuery);
-                    }
-                }while (rs.next());
-            }
-            stmt.close();
-        }
-    }
-
-    /**
-     * Function Checks for given table Name in database.
-     * @return boolean (true/false)
-     * @throws SQLException is thrown
-     */
-    public static boolean checkTableForLogIn( String tableName ) throws SQLException
-    {
-        if(con.isValid(0))
-        {
-            DatabaseMetaData md = con.getMetaData();
-            ResultSet rs = md.getTables(null, null, "%", null);
-            if( !rs.next() )
-            {
-                return false;
-            }
-            else
-            {
-                do
-                {
-                    if( tableName.equals(rs.getString(3)) )
-                    {
-                        return true;
-                    }
-                }while (rs.next());
-            }
-        }
-        return false;
-    }
-
-    /**
-     * This function check for the table & create's if not present.
-     * @param createTableQuery query to create table
-     * @throws SQLException is thrown
-     */
-    public static void checkTableForReg( String tableName, String createTableQuery)
-            throws SQLException
-    {
-        if(con.isValid(0))
-        {
-            Statement stmt = con.createStatement();
-            DatabaseMetaData md = con.getMetaData();
-            ResultSet rs = md.getTables(null, null, "%", null);
-            if( !rs.next() )
-            {
-                stmt.executeUpdate(createTableQuery);
-                stmt.close();
-                return;
-            }
-            else
-            {
-                do
-                {
-                    if( tableName.equals(rs.getString(3)) )
-                    {
-                        stmt.close();
-                        return;
-                    }
-                }while (rs.next());
-            }
-            stmt.close();
-        }
     }
 }

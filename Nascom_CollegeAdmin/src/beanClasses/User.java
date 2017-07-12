@@ -5,9 +5,9 @@ package beanClasses;
  */
 public class User
 {
-    private String userName;
-    private String password;
-    private String userType;
+    protected String userName;
+    protected String password;
+    protected String userType;
 
     public String getUserType()
     {

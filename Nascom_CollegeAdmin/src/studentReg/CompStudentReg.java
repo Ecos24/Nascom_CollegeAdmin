@@ -1,7 +1,6 @@
 package studentReg;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,8 +8,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.Date;
 import java.text.NumberFormat;
-import java.util.Date;
 import java.util.Locale;
 import java.util.Properties;
 
@@ -29,17 +28,21 @@ import javax.swing.text.NumberFormatter;
 
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
+import org.jdatepicker.impl.SqlDateModel;
 
+import beanClasses.StudentUser;
 import beanClasses.User;
 import extendedClasses.DateLabelFormatter;
 import extraClasses.CityReadFromFile;
+import extraClasses.ImageFunctions;
 import extraClasses.StatesReadFromFile;
 import memberGUI.admin.MainGUI;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class CompStudentReg
 {
-	private User user;
+	private StudentUser user;
 	
 	private final static int PIN_CODE_LENGTH = 6;
 	private final static long PIN_CODE = 999999l;
@@ -53,18 +56,6 @@ public class CompStudentReg
 	
 	public JFrame compStudentReg;
 	
-	public static void main(String[] args)
-	{
-		EventQueue.invokeLater(new Runnable()
-		{
-			public void run()
-			{
-				CompStudentReg window = new CompStudentReg(null);
-				window.compStudentReg.setVisible(true);
-			}
-		});
-	}
-	
 	// Components Declaration.
 	// Section 1.
 	private JTextPane section1Header;
@@ -72,7 +63,7 @@ public class CompStudentReg
 	private JTextField stdFirstName;
 	private JTextField stdMiddelName;
 	private JTextField stdLastName;
-	private UtilDateModel stdDOBDateModel;
+	private SqlDateModel stdDOBDateModel;
 	private JDatePanelImpl stdDOBDatePickerPanel;
 	private JDatePickerImpl stdDOB;
 	@SuppressWarnings("rawtypes")
@@ -81,6 +72,8 @@ public class CompStudentReg
 	private JFormattedTextField stdMobNo;
 	@SuppressWarnings("rawtypes")
 	private JComboBox stdCategory;
+	private JTextField stdImagePathView;
+	private JButton stdImageBrowse;
 	private JTextPane stdFirstNameTextPane;
 	private JTextPane stdMiddleNameTextPane;
 	private JTextPane stdLastNameTextPane;
@@ -89,6 +82,7 @@ public class CompStudentReg
 	private JTextPane stdEmailTextPane;
 	private JTextPane stdMobNoTextPane;
 	private JTextPane stdCategoryTextPane;
+	private JTextPane stdImageTextPane;
 	// Section 2.
 	private JTextPane section2Header;
 	private JSeparator section2Separator;
@@ -122,9 +116,12 @@ public class CompStudentReg
 	/**
 	 * @wbp.parser.entryPoint
 	 */
-	public CompStudentReg(User user)
+	public CompStudentReg(User parentUser)
 	{
-		this.user = user;
+		this.user = new StudentUser();
+		this.user.setUserName(parentUser.getUserName());
+		this.user.setUserType(parentUser.getUserType());
+		this.user.setPassword(parentUser.getPassword());
 		bgColor = new Color(238, 238, 238);
 		initializeFrame();
 		initComponents();
@@ -153,6 +150,9 @@ public class CompStudentReg
 		compStudentReg.getContentPane().add(stdCategory);
 		compStudentReg.getContentPane().add(stdMobNoTextPane);
 		compStudentReg.getContentPane().add(stdMobNo);
+		compStudentReg.getContentPane().add(stdImageTextPane);
+		compStudentReg.getContentPane().add(stdImagePathView);
+		compStudentReg.getContentPane().add(stdImageBrowse);
 
 		//Section 2.
 		compStudentReg.getContentPane().add(section2Header);
@@ -219,7 +219,6 @@ public class CompStudentReg
 		stdMiddleNameTextPane.setEditable(false);
 		stdMiddelName = new JTextField();
 		stdMiddelName.setBounds(360, 60, 130, 20);
-		stdMiddelName.setColumns(10);
 
 		stdLastNameTextPane = new JTextPane();
 		stdLastNameTextPane.setBounds(520, 60, 80, 20);
@@ -228,8 +227,7 @@ public class CompStudentReg
 		stdLastNameTextPane.setFocusable(false);
 		stdLastNameTextPane.setEditable(false);
 		stdLastName = new JTextField();
-		stdLastName.setColumns(10);
-		stdLastName.setBounds(610, 60, 130, 20);
+		stdLastName.setBounds(610, 60, 130, 20);		
 		
 		// Second Row
 		stdDOBTextPane = new JTextPane();
@@ -238,7 +236,7 @@ public class CompStudentReg
 		stdDOBTextPane.setText("DOB");
 		stdDOBTextPane.setFocusable(false);
 		stdDOBTextPane.setEditable(false);
-		stdDOBDateModel = new UtilDateModel();
+		stdDOBDateModel = new SqlDateModel();
 		Properties datePanelProperties = new Properties();
 		datePanelProperties.put("text.today", "Today");
 		datePanelProperties.put("text.month", "Month");
@@ -286,6 +284,18 @@ public class CompStudentReg
 		String[] stdCategoryChoices = {"Select","GEN","OBC(Creamy)", "OBC(Non-Creamy)", "SC", "ST"};
 		stdCategory = new JComboBox(stdCategoryChoices);
 		stdCategory.setBounds(360, 140, 130, 20);
+		
+		stdImageTextPane = new JTextPane();
+		stdImageTextPane.setBounds(520, 140, 80, 20);
+		stdImageTextPane.setBackground(bgColor);
+		stdImageTextPane.setText("Image");
+		stdImageTextPane.setFocusable(false);
+		stdImageTextPane.setEditable(false);
+		stdImagePathView = new JTextField();
+		stdImagePathView.setEditable(false);
+		stdImagePathView.setBounds(610, 140, 110, 20);
+		stdImageBrowse = new JButton("...");
+		stdImageBrowse.setBounds(718, 140, 20, 20);
 		
 		//////////////////////////////////////////////////////////////////
 		//////////////////////SECOND SECTION//////////////////////////////
@@ -434,6 +444,28 @@ public class CompStudentReg
 				}
 			}
 		});
+		
+		// Browse Image.
+		stdImageBrowse.addMouseListener(new MouseAdapter()
+		{
+			@Override
+			public void mouseClicked(MouseEvent e)
+			{
+				if( e.getClickCount() == 1 )
+				{
+					String imagePath = ImageFunctions.selectImage();
+					if( ImageFunctions.validateSelectedImage( imagePath ))
+					{
+						stdImagePathView.setText(imagePath);
+					}
+					else
+					{
+						stdImagePathView.setText(null);
+						JOptionPane.showMessageDialog(compStudentReg, "Invalid File.");
+					}
+				}
+			}
+		});
 
 		stdCorespChoice.addActionListener(new ActionListener()
 		{
@@ -528,6 +560,22 @@ public class CompStudentReg
 					return;
 				}
 				
+				user.setfName(stdFirstName.getText());
+				user.setmName(stdMiddelName.getText());
+				user.setlName(stdLastName.getText());
+				user.setDOB((Date)stdDOB.getModel().getValue());
+				user.setGender((String)stdGender.getSelectedItem());
+				user.seteMail(stdEmail.getText());
+				user.setMobNo(Long.parseLong(stdMobNo.getText()));
+				user.setCategory((String)stdCategory.getSelectedItem());
+				user.setState((String)stdAddState.getSelectedItem());
+				user.setCity((String)stdAddCity.getSelectedItem());
+				user.setPinconde(Integer.parseInt(stdAddPincode.getText()));
+				user.setAdd(stdAddHome.getText());
+				user.setCorespState((String)stdCorespAddState.getSelectedItem());
+				user.setCorespCity((String)stdCorespAddCity.getSelectedItem());
+				user.setCorespPinconde(Integer.parseInt(stdCorespAddPincode.getText()));
+				user.setCorespAdd(stdCorespAddHome.getText());
 				CompStudentReg1 reg = new CompStudentReg1(user);
 				reg.compStudentReg1.setVisible(true);
 				compStudentReg.dispose();

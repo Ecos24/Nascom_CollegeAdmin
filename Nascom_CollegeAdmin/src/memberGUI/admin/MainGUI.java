@@ -1,7 +1,6 @@
 package memberGUI.admin;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -33,18 +32,6 @@ public class MainGUI
 	private JButton viewEditStd;
 	private JButton viewEditFac;
 	private JButton logOut;
-	
-	public static void main(String[] args)
-	{
-		EventQueue.invokeLater(new Runnable()
-		{
-			public void run()
-			{
-				MainGUI window = new MainGUI();
-				window.adminMainGUI.setVisible(true);
-			}
-		});
-	}
 	
 	public MainGUI()
 	{  

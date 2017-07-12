@@ -63,7 +63,7 @@ public class ViewAllStd
 		tableModel.setColumnIdentifiers(columns);
 		stdTable.setModel(tableModel);
 		stdTable.setRowHeight(30);
-		ViewEditStdFac.populateTable(tableModel);		
+		ViewEditStdFac.populateTable(tableModel, false);		
 	}
 	
 	private void initListeners()

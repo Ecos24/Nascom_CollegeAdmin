@@ -3,13 +3,13 @@ package extraClasses;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class RegisterUtilityFunctions
+public class GUIRegisterUtilityFunctions
 {
 	private static String[] mediums = {"Select", "English", "Hindi"};
 	private static String[] boards = {"Select", "CBSE", "ICSE", "State Board"};
 	private ArrayList<String> errorMsg;
 	
-	public RegisterUtilityFunctions()
+	public GUIRegisterUtilityFunctions()
 	{
 		errorMsg = new ArrayList<>();
 	}

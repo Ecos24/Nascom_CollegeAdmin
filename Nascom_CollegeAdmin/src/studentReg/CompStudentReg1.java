@@ -22,12 +22,12 @@ import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.text.NumberFormatter;
 
-import beanClasses.User;
+import beanClasses.StudentUser;
 import memberGUI.admin.MainGUI;
 
 public class CompStudentReg1
 {
-	private User user;
+	private StudentUser user;
 	
 	
 	private static final long MOB_DIGIT = 9999999999l;
@@ -45,31 +45,23 @@ public class CompStudentReg1
 	private JSeparator section4Separator;
 	private JTextPane stdFatherHeader;
 	private JSeparator stdFatherSeparator;
-	private JTextField stdFatherFirstName;
-	private JTextField stdFatherMiddelName;
-	private JTextField stdFatherLastName;
+	private JTextField stdFatherName;
 	private JFormattedTextField stdFatherMobNo;
 	@SuppressWarnings("rawtypes")
 	private JComboBox stdFatherOccupation;
 	private JTextField stdFatherEmail;
-	private JTextPane stdFatherFirstNameTextPane;
-	private JTextPane stdFatherMiddleNameTextPane;
-	private JTextPane stdFatherLastNameTextPane;
+	private JTextPane stdFatherNameTextPane;
 	private JTextPane stdFatherMobNoTextPane;
 	private JTextPane stdFatherOccupationTextPane;
 	private JTextPane stdFatherEmailTextPane;
 	private JTextPane stdMotherHeader;
 	private JSeparator stdMotherSeparator;
-	private JTextField stdMotherFirstName;
-	private JTextField stdMotherMiddleName;
-	private JTextField stdMotherLastName;
+	private JTextField stdMotherName;
 	private JFormattedTextField stdMotherMobNo;
 	@SuppressWarnings("rawtypes")
 	private JComboBox stdMotherOccupation;
 	private JTextField stdMotherEmail;
-	private JTextPane stdMotherFirstNameTextPane;
-	private JTextPane stdMotherMiddleNameTextPane;
-	private JTextPane stdMotherLastNameTextPane;
+	private JTextPane stdMotherNameTextPane;
 	private JTextPane stdMotherMobNoTextPane;
 	private JTextPane stdMotherOccupationTextPane;
 	private JTextPane stdMotherEmailTextPane;
@@ -79,7 +71,7 @@ public class CompStudentReg1
 	/**
 	 * @wbp.parser.entryPoint
 	 */
-	public CompStudentReg1(User user)
+	public CompStudentReg1(StudentUser user)
 	{
 		this.user = user;
 		bgColor = new Color(238, 238, 238);
@@ -96,12 +88,8 @@ public class CompStudentReg1
 		compStudentReg1.getContentPane().add(section4Separator);
 		compStudentReg1.getContentPane().add(stdFatherHeader);
 		compStudentReg1.getContentPane().add(stdFatherSeparator);
-		compStudentReg1.getContentPane().add(stdFatherFirstNameTextPane);
-		compStudentReg1.getContentPane().add(stdFatherFirstName);
-		compStudentReg1.getContentPane().add(stdFatherMiddleNameTextPane);
-		compStudentReg1.getContentPane().add(stdFatherMiddelName);
-		compStudentReg1.getContentPane().add(stdFatherLastNameTextPane);
-		compStudentReg1.getContentPane().add(stdFatherLastName);
+		compStudentReg1.getContentPane().add(stdFatherNameTextPane);
+		compStudentReg1.getContentPane().add(stdFatherName);
 		compStudentReg1.getContentPane().add(stdFatherMobNoTextPane);
 		compStudentReg1.getContentPane().add(stdFatherMobNo);
 		compStudentReg1.getContentPane().add(stdFatherOccupationTextPane);
@@ -110,12 +98,8 @@ public class CompStudentReg1
 		compStudentReg1.getContentPane().add(stdFatherEmail);
 		compStudentReg1.getContentPane().add(stdMotherHeader);
 		compStudentReg1.getContentPane().add(stdMotherSeparator);
-		compStudentReg1.getContentPane().add(stdMotherFirstNameTextPane);
-		compStudentReg1.getContentPane().add(stdMotherFirstName);
-		compStudentReg1.getContentPane().add(stdMotherMiddleNameTextPane);
-		compStudentReg1.getContentPane().add(stdMotherMiddleName);
-		compStudentReg1.getContentPane().add(stdMotherLastNameTextPane);
-		compStudentReg1.getContentPane().add(stdMotherLastName);
+		compStudentReg1.getContentPane().add(stdMotherNameTextPane);
+		compStudentReg1.getContentPane().add(stdMotherName);
 		compStudentReg1.getContentPane().add(stdMotherMobNoTextPane);
 		compStudentReg1.getContentPane().add(stdMotherMobNo);
 		compStudentReg1.getContentPane().add(stdMotherOccupationTextPane);
@@ -156,35 +140,24 @@ public class CompStudentReg1
 		stdFatherSeparator = new JSeparator(SwingConstants.HORIZONTAL);
 		stdFatherSeparator.setBounds(22, 70, 715, 2);
 		// First Row
-		stdFatherFirstNameTextPane = new JTextPane();
-		stdFatherFirstNameTextPane.setBounds(20, 93, 80, 20);
-		stdFatherFirstNameTextPane.setBackground(bgColor);
-		stdFatherFirstNameTextPane.setText("First Name");
-		stdFatherFirstNameTextPane.setFocusable(false);
-		stdFatherFirstNameTextPane.setEditable(false);
-		stdFatherFirstName = new JTextField();
-		stdFatherFirstName.setBounds(110, 93, 130, 20);
-		stdFatherFirstName.setColumns(10);
+		stdFatherNameTextPane = new JTextPane();
+		stdFatherNameTextPane.setBounds(20, 93, 80, 20);
+		stdFatherNameTextPane.setBackground(bgColor);
+		stdFatherNameTextPane.setText("Name");
+		stdFatherNameTextPane.setFocusable(false);
+		stdFatherNameTextPane.setEditable(false);
+		stdFatherName = new JTextField();
+		stdFatherName.setBounds(110, 93, 380, 20);
+		stdFatherName.setColumns(10);
 
-		stdFatherMiddleNameTextPane = new JTextPane();
-		stdFatherMiddleNameTextPane.setBounds(270, 93, 90, 20);
-		stdFatherMiddleNameTextPane.setBackground(bgColor);
-		stdFatherMiddleNameTextPane.setText("Middle Name");
-		stdFatherMiddleNameTextPane.setFocusable(false);
-		stdFatherMiddleNameTextPane.setEditable(false);
-		stdFatherMiddelName = new JTextField();
-		stdFatherMiddelName.setBounds(360, 93, 130, 20);
-		stdFatherMiddelName.setColumns(10);
-
-		stdFatherLastNameTextPane = new JTextPane();
-		stdFatherLastNameTextPane.setBounds(520, 93, 80, 20);
-		stdFatherLastNameTextPane.setBackground(bgColor);
-		stdFatherLastNameTextPane.setText("Last Name");
-		stdFatherLastNameTextPane.setFocusable(false);
-		stdFatherLastNameTextPane.setEditable(false);
-		stdFatherLastName = new JTextField();
-		stdFatherLastName.setColumns(10);
-		stdFatherLastName.setBounds(610, 93, 130, 20);
+		stdFatherEmailTextPane = new JTextPane();
+		stdFatherEmailTextPane.setBounds(520, 93, 80, 20);
+		stdFatherEmailTextPane.setBackground(bgColor);
+		stdFatherEmailTextPane.setText("E-Mail");
+		stdFatherEmailTextPane.setFocusable(false);
+		stdFatherEmailTextPane.setEditable(false);
+		stdFatherEmail = new JTextField();
+		stdFatherEmail.setBounds(610, 93, 130, 20);
 
 		// Second Row
 		stdFatherMobNoTextPane = new JTextPane();
@@ -205,16 +178,6 @@ public class CompStudentReg1
 		String[] occupationChoices = { "Select", "Engineer", "Doctor", "Armed Forces", "Government Employed", "Self Employed" };
 		stdFatherOccupation = new JComboBox(occupationChoices);
 		stdFatherOccupation.setBounds(360, 133, 130, 20);
-
-		stdFatherEmailTextPane = new JTextPane();
-		stdFatherEmailTextPane.setBounds(520, 133, 80, 20);
-		stdFatherEmailTextPane.setBackground(bgColor);
-		stdFatherEmailTextPane.setText("E-Mail");
-		stdFatherEmailTextPane.setFocusable(false);
-		stdFatherEmailTextPane.setEditable(false);
-		stdFatherEmail = new JTextField();
-		stdFatherEmail.setColumns(10);
-		stdFatherEmail.setBounds(610, 133, 130, 20);
 		
 		// Mother's Section.
 		stdMotherHeader = new JTextPane();
@@ -227,35 +190,25 @@ public class CompStudentReg1
 		stdMotherSeparator = new JSeparator(SwingConstants.HORIZONTAL);
 		stdMotherSeparator.setBounds(22, 182, 715, 2);
 		// First Row
-		stdMotherFirstNameTextPane = new JTextPane();
-		stdMotherFirstNameTextPane.setBounds(20, 205, 80, 20);
-		stdMotherFirstNameTextPane.setBackground(bgColor);
-		stdMotherFirstNameTextPane.setText("First Name");
-		stdMotherFirstNameTextPane.setFocusable(false);
-		stdMotherFirstNameTextPane.setEditable(false);
-		stdMotherFirstName = new JTextField();
-		stdMotherFirstName.setBounds(110, 205, 130, 20);
-		stdMotherFirstName.setColumns(10);
+		stdMotherNameTextPane = new JTextPane();
+		stdMotherNameTextPane.setBounds(20, 205, 80, 20);
+		stdMotherNameTextPane.setBackground(bgColor);
+		stdMotherNameTextPane.setText("Name");
+		stdMotherNameTextPane.setFocusable(false);
+		stdMotherNameTextPane.setEditable(false);
+		stdMotherName = new JTextField();
+		stdMotherName.setBounds(110, 205, 380, 20);
 
-		stdMotherMiddleNameTextPane = new JTextPane();
-		stdMotherMiddleNameTextPane.setBounds(270, 205, 90, 20);
-		stdMotherMiddleNameTextPane.setBackground(bgColor);
-		stdMotherMiddleNameTextPane.setText("Middle Name");
-		stdMotherMiddleNameTextPane.setFocusable(false);
-		stdMotherMiddleNameTextPane.setEditable(false);
-		stdMotherMiddleName = new JTextField();
-		stdMotherMiddleName.setBounds(360, 205, 130, 20);
-		stdMotherMiddleName.setColumns(10);
 
-		stdMotherLastNameTextPane = new JTextPane();
-		stdMotherLastNameTextPane.setBounds(520, 205, 80, 20);
-		stdMotherLastNameTextPane.setBackground(bgColor);
-		stdMotherLastNameTextPane.setText("Last Name");
-		stdMotherLastNameTextPane.setFocusable(false);
-		stdMotherLastNameTextPane.setEditable(false);
-		stdMotherLastName = new JTextField();
-		stdMotherLastName.setColumns(10);
-		stdMotherLastName.setBounds(610, 205, 130, 20);
+
+		stdMotherEmailTextPane = new JTextPane();
+		stdMotherEmailTextPane.setBounds(520, 205, 80, 20);
+		stdMotherEmailTextPane.setBackground(bgColor);
+		stdMotherEmailTextPane.setText("E-Mail");
+		stdMotherEmailTextPane.setFocusable(false);
+		stdMotherEmailTextPane.setEditable(false);
+		stdMotherEmail = new JTextField();
+		stdMotherEmail.setBounds(610, 205, 130, 20);
 
 		// Second Row
 		stdMotherMobNoTextPane = new JTextPane();
@@ -275,17 +228,6 @@ public class CompStudentReg1
 		stdMotherOccupationTextPane.setEditable(false);
 		stdMotherOccupation = new JComboBox(occupationChoices);
 		stdMotherOccupation.setBounds(360, 245, 130, 20);
-
-		stdMotherEmailTextPane = new JTextPane();
-		stdMotherEmailTextPane.setBounds(520, 245, 80, 20);
-		stdMotherEmailTextPane.setBackground(bgColor);
-		stdMotherEmailTextPane.setText("E-Mail");
-		stdMotherEmailTextPane.setFocusable(false);
-		stdMotherEmailTextPane.setEditable(false);
-		stdMotherEmail = new JTextField();
-		stdMotherEmail.setColumns(10);
-		stdMotherEmail.setBounds(610, 245, 130, 20);
-		
 		
 		stdRegNextFrame = new JButton("Continue");
 		stdRegNextFrame.setBounds(((frameLength/2)-60), frameheigth - 100, 120, 25);
@@ -311,6 +253,14 @@ public class CompStudentReg1
 					return;
 				}
 				
+				user.setFatherName(stdFatherName.getText());
+				user.setFatherMobNo(Long.parseLong(stdFatherMobNo.getText()));
+				user.setFatherOccupation((String)stdFatherOccupation.getSelectedItem());
+				user.setFatherEMail(stdFatherEmail.getText());
+				user.setMotherName(stdMotherName.getText());
+				user.setMotherMobNo(Long.parseLong(stdMotherMobNo.getText()));
+				user.setMotherOccupation((String)stdMotherOccupation.getSelectedItem());
+				user.setMotherEMail(stdMotherEmail.getText());
 				CompStudentReg2 reg = new CompStudentReg2(user);
 				reg.compStudentReg2.setVisible(true);
 				compStudentReg1.dispose();
@@ -373,9 +323,8 @@ public class CompStudentReg1
 	/////////////////////////////////////////////////////////////////////////////////
 	private boolean checkFather()
 	{
-		if( stdFatherFirstName.getText().equals("") || stdFatherLastName.getText().equals("") ||
-				stdFatherMobNo.getText().equals("") || stdFatherEmail.getText().equals("") ||
-				stdFatherOccupation.getSelectedIndex() == 0 )
+		if( stdFatherName.getText().equals("") || stdFatherMobNo.getText().equals("") || 
+				stdFatherEmail.getText().equals("") || stdFatherOccupation.getSelectedIndex() == 0 )
 		{
 			JOptionPane.showMessageDialog(null, "Complete Father's Details");
 			return false;
@@ -389,9 +338,8 @@ public class CompStudentReg1
 	}
 	private boolean checkMother()
 	{
-		if( stdMotherFirstName.getText().equals("") || stdMotherLastName.getText().equals("") ||
-				stdMotherMobNo.getText().equals("") || stdMotherEmail.getText().equals("") ||
-				stdMotherOccupation.getSelectedIndex() == 0 )
+		if( stdMotherName.getText().equals("") || stdMotherMobNo.getText().equals("") ||
+				stdMotherEmail.getText().equals("") || stdMotherOccupation.getSelectedIndex() == 0 )
 		{
 			JOptionPane.showMessageDialog(null, "Complete Mother's Details");
 			return false;

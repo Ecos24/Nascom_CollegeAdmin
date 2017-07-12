@@ -11,8 +11,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import beanClasses.User;
+import dbConnection.GetDBConnection;
 import memberGUI.FacultyFrame;
 import memberGUI.StudentFrame;
+import memberGUI.admin.MainGUI;
 import userRegLog.Authenticate;
 import javax.swing.JTextPane;
 import javax.swing.JPasswordField;
@@ -37,6 +39,14 @@ public class MainFrame
 
 	public static void main(String[] args)
 	{
+		try
+		{
+			java.sql.Connection con = GetDBConnection.getConnection();
+		}
+		catch(ClassNotFoundException | SQLException e)
+		{
+			System.out.println("Exception Handeled initialy.");
+		}
 		EventQueue.invokeLater(new Runnable()
 		{
 			public void run()
@@ -117,7 +127,13 @@ public class MainFrame
 		                if( authUser != null )
 		                {
 		                    System.out.println("User Authenticated");
-		                	if( authUser.getString("usertype").equals("student") )
+		                    if( authUser.getString("usertype").equals("admin") )
+		                    {
+		                    	MainGUI admin = new MainGUI();
+		                    	admin.adminMainGUI.setVisible(true);
+		                    	logInFrame.dispose();
+		                    }
+		                    else if( authUser.getString("usertype").toLowerCase().equals("student") )
 		                	{
 		                		StudentFrame student = new StudentFrame();
 		                		student.studentFrame.setVisible(true);

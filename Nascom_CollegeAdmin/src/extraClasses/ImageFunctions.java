@@ -1,0 +1,56 @@
+package extraClasses;
+
+import java.awt.Image;
+import java.io.File;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+public class ImageFunctions
+{
+	public static ImageIcon resizeImage(String imagePath)
+	{
+		Image img = new ImageIcon(imagePath).getImage();
+		Image resize = img.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+		return new ImageIcon(resize);
+	}
+	
+	public static String selectImage()
+	{
+		JFileChooser browseImage = new JFileChooser();
+		browseImage.setCurrentDirectory(new File(System.getProperty("user.home")) );
+		FileNameExtensionFilter imageFilter = new FileNameExtensionFilter("Images", 
+				"jpg", "png", "jpeg");
+		browseImage.addChoosableFileFilter(imageFilter);
+		int result = browseImage.showSaveDialog(null);
+		if( result == JFileChooser.APPROVE_OPTION )
+		{
+			File selectedImage = browseImage.getSelectedFile();
+			System.out.println(selectedImage.getAbsolutePath());
+			return selectedImage.getAbsolutePath();
+		}
+		else if( result == JFileChooser.CANCEL_OPTION )
+		{
+			System.out.println("No File Selected");
+			return null;
+		}
+		return null;
+	}
+	
+	public static boolean validateSelectedImage(String imagePath)
+	{
+		String extention = "";
+		int i = imagePath.lastIndexOf(".");
+		int p = imagePath.lastIndexOf("/");
+		if( i > p )
+		{
+			extention = imagePath.substring(i+1);
+		}
+		if( extention.equals("jpg") || extention.equals("jpeg") || extention.equals("png") )
+		{
+			return true;
+		}
+		return false;
+	}
+}

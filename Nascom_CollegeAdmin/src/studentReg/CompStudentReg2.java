@@ -1,6 +1,7 @@
 package studentReg;
 
 import java.awt.Color;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,15 +24,14 @@ import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.text.NumberFormatter;
 
-import beanClasses.User;
-import extraClasses.RegisterUtilityFunctions;
+import beanClasses.StudentUser;
+import extraClasses.GUIRegisterUtilityFunctions;
 import memberGUI.admin.MainGUI;
 import userRegLog.RegisterUser;
 
 public class CompStudentReg2
 {
-	private User user;
-	
+	private StudentUser user;
 	
 	private final static long DIGITS_ROLL = 9999999l;
 	private final static long DIGITS_PER = 100l;
@@ -83,10 +83,22 @@ public class CompStudentReg2
 	
 	private JButton stdRegSubmit;
 	
+	public static void main(String[] args)
+	{
+		EventQueue.invokeLater(new Runnable()
+		{
+			public void run()
+			{
+				CompStudentReg2 window = new CompStudentReg2(null);
+				window.compStudentReg2.setVisible(true);
+			}
+		});
+	}
+	
 	/**
 	 * @wbp.parser.entryPoint
 	 */
-	public CompStudentReg2( User user)
+	public CompStudentReg2( StudentUser user)
 	{
 		this.user = user;
 		bgColor = new Color(238, 238, 238);
@@ -178,7 +190,7 @@ public class CompStudentReg2
 		stdClsXPassingYrTextPane.setText("Passing Year");
 		stdClsXPassingYrTextPane.setFocusable(false);
 		stdClsXPassingYrTextPane.setEditable(false);
-		stdClsXPassingYr = new JComboBox(RegisterUtilityFunctions.getPassingYr());
+		stdClsXPassingYr = new JComboBox(GUIRegisterUtilityFunctions.getPassingYr());
 		stdClsXPassingYr.setBounds(360, 93, 130, 20);
 
 		stdClsXSchoolNameTextPane = new JTextPane();
@@ -198,7 +210,7 @@ public class CompStudentReg2
 		stdClsXBoardTextPane.setText("Board");
 		stdClsXBoardTextPane.setFocusable(false);
 		stdClsXBoardTextPane.setEditable(false);
-		stdClsXBoard = new JComboBox(RegisterUtilityFunctions.getBoard());
+		stdClsXBoard = new JComboBox(GUIRegisterUtilityFunctions.getBoard());
 		stdClsXBoard.setBounds(110, 133, 130, 20);
 
 		stdClsXMediumStudyTextPane = new JTextPane();
@@ -207,7 +219,7 @@ public class CompStudentReg2
 		stdClsXMediumStudyTextPane.setText("Medium");
 		stdClsXMediumStudyTextPane.setFocusable(false);
 		stdClsXMediumStudyTextPane.setEditable(false);
-		stdClsXMediumStudy = new JComboBox(RegisterUtilityFunctions.getMedium());
+		stdClsXMediumStudy = new JComboBox(GUIRegisterUtilityFunctions.getMedium());
 		stdClsXMediumStudy.setBounds(360, 133, 130, 20);
 
 		stdClsXPercnetageTextPane = new JTextPane();
@@ -245,7 +257,7 @@ public class CompStudentReg2
 		stdClsXIIPassingYrTextPane.setText("Passing Year");
 		stdClsXIIPassingYrTextPane.setFocusable(false);
 		stdClsXIIPassingYrTextPane.setEditable(false);
-		stdClsXIIPassingYr = new JComboBox(RegisterUtilityFunctions.getPassingYr());
+		stdClsXIIPassingYr = new JComboBox(GUIRegisterUtilityFunctions.getPassingYr());
 		stdClsXIIPassingYr.setBounds(360, 205, 130, 20);
 
 		stdClsXIISchoolNameTextPane = new JTextPane();
@@ -264,7 +276,7 @@ public class CompStudentReg2
 		stdClsXIIBoardTextPane.setText("Board");
 		stdClsXIIBoardTextPane.setFocusable(false);
 		stdClsXIIBoardTextPane.setEditable(false);
-		stdClsXIIBoard = new JComboBox(RegisterUtilityFunctions.getBoard());
+		stdClsXIIBoard = new JComboBox(GUIRegisterUtilityFunctions.getBoard());
 		stdClsXIIBoard.setBounds(110, 245, 130, 20);
 
 		stdClsXIIMediumTextPane = new JTextPane();
@@ -273,7 +285,7 @@ public class CompStudentReg2
 		stdClsXIIMediumTextPane.setText("Medium Of Study");
 		stdClsXIIMediumTextPane.setFocusable(false);
 		stdClsXIIMediumTextPane.setEditable(false);
-		stdClsXIIMedium = new JComboBox(RegisterUtilityFunctions.getMedium());
+		stdClsXIIMedium = new JComboBox(GUIRegisterUtilityFunctions.getMedium());
 		stdClsXIIMedium.setBounds(360, 245, 130, 20);
 
 		stdClsXIIPercnetageTextPane = new JTextPane();
@@ -305,12 +317,62 @@ public class CompStudentReg2
 				{
 					return;
 				}
+				/*user = new StudentUser();
+				user.setUserName("2014BCS1195");
+				user.setUserType("Student");
+				user.setPassword("hello");
+				user.setfName("Divyang");
+				user.setlName("Tyagi");
+				user.setDOB(new Date(1996,03,24));
+				user.setGender("Male");
+				user.seteMail("divyang@gmail.com");
+				user.setMobNo(9899855632l);
+				user.setCategory("GEN");
+				user.setCity("Ghaziabad");
+				user.setState("UT");
+				user.setPinconde(201010);
+				user.setAdd("Vaishali");
+				user.setCorespCity("Ghaziabad");
+				user.setCorespState("UT");
+				user.setCorespPinconde(201010);
+				user.setCorespAdd("Vaishali");
+				user.setFatherName("Naresh Pal Tyagi");
+				user.setFatherEMail("nareshpaltyagi@gmail.com");
+				user.setFatherMobNo(9410028356l);
+				user.setFatherOccupation("Engineer");
+				user.setMotherName("Poonam Tyagi");
+				user.setMotherEMail("poonamtyagi1969@gmail.com");
+				user.setMotherMobNo(8447246190l);
+				user.setMotherOccupation("Self Employeed");
+				user.setClsXRollNo("1234569");
+				user.setClsXPassingYr(2011);
+				user.setClsXSchool("ST. Thomas School Ghaziabad");
+				user.setClsXBoard("CBSE");
+				user.setClsXMedium("English");
+				user.setClsXPercentage(85.5f);
+				user.setClsXIIRollNo(98765432l);
+				user.setClsXIIPassingYr(2013);
+				user.setClsXIISchool("ST. Thomas School Ghaziabad");
+				user.setClsXIIBoard("CBSE");
+				user.setClsXIIMedium("English");
+				user.setClsXIIPercentage(86.5f);*/
 				
+				user.setClsXRollNo(stdClsXRollNo.getText());
+				user.setClsXPassingYr(Integer.parseInt((String)stdClsXPassingYr.getSelectedItem()));
+				user.setClsXSchool(stdClsXSchoolName.getText());
+				user.setClsXBoard( (String)stdClsXBoard.getSelectedItem());
+				user.setClsXMedium((String)stdClsXMediumStudy.getSelectedItem());
+				user.setClsXPercentage(Float.parseFloat(stdClsXPercnetage.getText()));
+				user.setClsXIIRollNo(Long.parseLong(stdClsXIIRollNo.getText()));
+				user.setClsXIIPassingYr(Integer.parseInt((String)stdClsXIIPassingYr.getSelectedItem()));
+				user.setClsXIISchool(stdClsXIISchoolName.getText());
+				user.setClsXIIBoard( (String)stdClsXIIBoard.getSelectedItem());
+				user.setClsXIIMedium((String)stdClsXIIMedium.getSelectedItem());
+				user.setClsXIIPercentage(Float.parseFloat(stdClsXIIPercnetage.getText()));
 				// Entry to DB Logic
-                RegisterUser reg = new RegisterUser(user);
                 try
                 {
-                	if( reg.registerUser() )
+                	if( RegisterUser.registerStudentUser(user) )
                 	{
 	                    System.out.println("User Registered");
 	                	JOptionPane.showMessageDialog(null, "User Registered");
@@ -322,13 +384,13 @@ public class CompStudentReg2
                 }
                 catch(ClassNotFoundException e)
                 {
-                	JOptionPane.showMessageDialog(compStudentReg2, "User Not Registered Internal Application Error!!");
                 	System.out.println("JDBC connector Class Not Found.");
+                	JOptionPane.showMessageDialog(compStudentReg2, "User Not Registered Internal Application Error!!");
 				}
                 catch(SQLException e)
-                {
-                	JOptionPane.showMessageDialog(compStudentReg2, "User Not Registered Internal Application Error!!");
+                {                	
                 	System.out.println("Exception --> "+e.getMessage());
+                	JOptionPane.showMessageDialog(compStudentReg2, "User Not Registered Internal Application Error!!");
 				}
                 
                 // Redirect to Admin UI.
@@ -422,7 +484,7 @@ public class CompStudentReg2
 	private boolean checkX()
 	{
 		boolean checkFlag = true;
-		RegisterUtilityFunctions errorUtility = new RegisterUtilityFunctions();
+		GUIRegisterUtilityFunctions errorUtility = new GUIRegisterUtilityFunctions();
 		
 		if( stdClsXRollNo.getText().equals("") || stdClsXPassingYr.getSelectedIndex() == 0 ||
 				stdClsXSchoolName.getText().equals("") || stdClsXBoard.getSelectedIndex() == 0 ||
@@ -451,7 +513,7 @@ public class CompStudentReg2
 	private boolean checkXII()
 	{
 		boolean checkFlag = true;
-		RegisterUtilityFunctions errorUtility = new RegisterUtilityFunctions();
+		GUIRegisterUtilityFunctions errorUtility = new GUIRegisterUtilityFunctions();
 		
 		if( stdClsXIIRollNo.getText().equals("") || stdClsXIIPassingYr.getSelectedIndex() == 0 ||
 				stdClsXIISchoolName.getText().equals("") || stdClsXIIBoard.getSelectedIndex() == 0 ||
@@ -465,7 +527,7 @@ public class CompStudentReg2
 			errorUtility.storeError("Invalid Class XII Roll Number.");
 			checkFlag = false;
 		}
-		if( stdClsXIIPassingYr.getSelectedIndex() <= stdClsXPassingYr.getSelectedIndex() )
+		if( stdClsXIIPassingYr.getSelectedIndex() < stdClsXPassingYr.getSelectedIndex()+2 )
 		{
 			errorUtility.storeError("Class XII passing year has to be greater then Class X's passing year.");
 			checkFlag = false;

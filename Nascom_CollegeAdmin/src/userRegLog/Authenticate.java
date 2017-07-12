@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 import beanClasses.User;
 import dbConnection.GetDBConnection;
+import dbConnection.ReadProjectProperties;
 
 /**
  * Class for Authenticating user for LogIn.
@@ -24,7 +25,8 @@ public class Authenticate
     {
     	Connection con = GetDBConnection.getConnection();
     	
-    	String insertQuesry = "SELECT username, password, usertype FROM USERS WHERE username = ?;";
+    	String insertQuesry = "SELECT userid, password, usertype FROM "+
+    							ReadProjectProperties.getProp("TNUSERS")+" WHERE userid = ?;";
         PreparedStatement prest = con.prepareStatement(insertQuesry);
         prest.setString(1, this.user.getUserName());
         ResultSet userResultSet = prest.executeQuery();
