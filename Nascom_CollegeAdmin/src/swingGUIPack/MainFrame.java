@@ -12,9 +12,9 @@ import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import beanClasses.User;
 import dbConnection.GetDBConnection;
-import memberGUI.FacultyFrame;
-import memberGUI.StudentFrame;
 import memberGUI.admin.MainGUI;
+import memberGUI.faculty.MainFacultyGUI;
+import memberGUI.student.MainStdGUI;
 import userRegLog.Authenticate;
 import javax.swing.JTextPane;
 import javax.swing.JPasswordField;
@@ -135,13 +135,13 @@ public class MainFrame
 		                    }
 		                    else if( authUser.getString("usertype").toLowerCase().equals("student") )
 		                	{
-		                		StudentFrame student = new StudentFrame();
-		                		student.studentFrame.setVisible(true);
+		                		MainStdGUI student = new MainStdGUI(authUser.getString("userid"));
+		                		student.stdMainGUI.setVisible(true);
 		                		logInFrame.dispose();
 		                	}
 		                	else if( authUser.getString("usertype").equals("faculty") )
 		                	{
-		                		FacultyFrame faculty = new FacultyFrame();
+		                		MainFacultyGUI faculty = new MainFacultyGUI();
 		                		faculty.facultyFrame.setVisible(true);
 		                		logInFrame.dispose();
 		                	}

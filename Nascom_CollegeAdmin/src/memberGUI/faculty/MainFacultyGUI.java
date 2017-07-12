@@ -1,10 +1,10 @@
-package memberGUI;
+package memberGUI.faculty;
 
 import java.awt.Color;
 
 import javax.swing.JFrame;
 
-public class StudentFrame 
+public class MainFacultyGUI
 {
 	private static final int framex = 100;
 	private static final int framey = 100;
@@ -12,9 +12,9 @@ public class StudentFrame
 	private static final int frameheigth = 300;
 	private Color bgColor;
 	
-	public JFrame studentFrame;
+	public JFrame facultyFrame;
 	
-	public StudentFrame()
+	public MainFacultyGUI()
 	{
 		bgColor = new Color(238, 238, 238);
 		initializeFrame();
@@ -36,12 +36,12 @@ public class StudentFrame
 	
 	private void initializeFrame()
 	{
-		studentFrame = new JFrame("Student");
-		studentFrame.setBounds(framex, framey, frameLength, frameheigth);
-		studentFrame.setBackground(bgColor);
-		studentFrame.getContentPane().setLayout(null);
-		studentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		facultyFrame = new JFrame("Faculty");
+		facultyFrame.setBounds(framex, framey, frameLength, frameheigth);
+		facultyFrame.setBackground(bgColor);
+		facultyFrame.getContentPane().setLayout(null);
+		facultyFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//studentFrame.setVisible(true);
-		studentFrame.setResizable(false);
+		facultyFrame.setResizable(false);
 	}
 }
