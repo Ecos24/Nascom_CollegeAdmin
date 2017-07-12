@@ -14,6 +14,11 @@ public class ReadProjectProperties
          res = ResourceBundle.getBundle("dbProperties");
     }
 
+    /**
+     * Gives the value corresponding to parameter key in dbProperties File.
+     * @param key
+     * @return
+     */
     public static String getProp(String key)
     {
         return res.getString(key);

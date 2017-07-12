@@ -3,6 +3,10 @@ package extraClasses;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+/**
+ * This Class provides the utility functions for GUI Registration form.
+ * @author ecos
+ */
 public class GUIRegisterUtilityFunctions
 {
 	private static String[] mediums = {"Select", "English", "Hindi"};

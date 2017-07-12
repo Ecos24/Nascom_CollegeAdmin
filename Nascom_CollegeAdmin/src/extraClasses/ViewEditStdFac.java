@@ -10,8 +10,17 @@ import javax.swing.table.DefaultTableModel;
 import dbConnection.GetDBConnection;
 import dbConnection.ReadProjectProperties;
 
+/**
+ * This Class provides Helper method for listing Faculties & Students in Tabular Form.
+ * @author ecos
+ */
 public class ViewEditStdFac
 {
+	/**
+	 * Funciton populates the given model with the data from DataBase.
+	 * @param model
+	 * @param facFlag
+	 */
 	public static void populateTable(DefaultTableModel model, boolean facFlag)
 	{
 		String[] row = new String[2];

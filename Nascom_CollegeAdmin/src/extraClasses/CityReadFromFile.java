@@ -6,25 +6,38 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * This Class gives method to read City names from file of corresponding state.
+ * @author ecos
+ */
 public class CityReadFromFile
 {
 	private static String filePath;
 	private static FileReader fr = null;
 	private static BufferedReader br = null;
-	private static ArrayList<String> states;
+	private static ArrayList<String> cities;
 	
+	/**
+	 * Function is used to get String[] of cities corresponding to state Name provided in parameter.
+	 * @param stateName
+	 * @return cities
+	 */
 	public static String[] getCities(String stateName)
 	{
 		readFile(stateName);
-		String[] stateArray = new String[states.size()];
-		stateArray = states.toArray(stateArray);
+		String[] stateArray = new String[cities.size()];
+		stateArray = cities.toArray(stateArray);
 		return stateArray;
 	}
 	
+	/**
+	 * This function Read the state file given in parameter & stores the cities in cities ArrayList
+	 * @param fileName
+	 */
 	private static void readFile(String fileName)
 	{
-		states = new ArrayList<>();
-		states.add("Select");
+		cities = new ArrayList<>();
+		cities.add("Select");
 		try
 		{
 			filePath = "extras/"+fileName+".txt";
@@ -34,7 +47,7 @@ public class CityReadFromFile
 			
 			while( (currentLine = br.readLine()) != null )
 			{
-				states.add(currentLine);
+				cities.add(currentLine);
 			}
 		}
 		catch (FileNotFoundException e)

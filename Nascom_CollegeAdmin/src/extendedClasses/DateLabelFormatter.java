@@ -6,6 +6,10 @@ import java.util.Calendar;
 
 import javax.swing.JFormattedTextField.AbstractFormatter;
 
+/**
+ *  This Class provides the Formatter for JDatePicker.
+ * @author ecos
+ */
 @SuppressWarnings("serial")
 public class DateLabelFormatter extends AbstractFormatter
 {

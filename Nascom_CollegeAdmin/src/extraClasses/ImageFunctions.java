@@ -7,8 +7,17 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+/**
+ * This class provides all the custom method related to Image Handling
+ * @author ecos
+ */
 public class ImageFunctions
 {
+	/**
+	 * This function resizes the image at the give image path.
+	 * @param imagePath
+	 * @return imageIcon
+	 */
 	public static ImageIcon resizeImage(String imagePath)
 	{
 		Image img = new ImageIcon(imagePath).getImage();
@@ -16,6 +25,10 @@ public class ImageFunctions
 		return new ImageIcon(resize);
 	}
 	
+	/**
+	 * This function setup's the Image Selector for user and return's the path of selected Image.
+	 * @return immage path
+	 */
 	public static String selectImage()
 	{
 		JFileChooser browseImage = new JFileChooser();
@@ -38,6 +51,11 @@ public class ImageFunctions
 		return null;
 	}
 	
+	/**
+	 * This function validates the selected File.
+	 * @param imagePath
+	 * @return validity of file selected.
+	 */
 	public static boolean validateSelectedImage(String imagePath)
 	{
 		String extention = "";

@@ -6,6 +6,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * This Class gives method to read States names from file.
+ * @author ecos
+ */
 public class StatesReadFromFile
 {
 	private final static String filePath = "extras/states.txt";
@@ -52,6 +56,10 @@ public class StatesReadFromFile
 		}
 	}
 	
+	/**
+	 * This function return all the states in country in a String array.
+	 * @return String[] states
+	 */
 	public static String[] getStates()
 	{		
 		String[] stateArray = new String[states.size()];
