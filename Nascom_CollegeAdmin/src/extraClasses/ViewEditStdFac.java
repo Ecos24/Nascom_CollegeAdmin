@@ -50,6 +50,7 @@ public class ViewEditStdFac
 	        				String name = facstdResultSet.getString("fname")+facstdResultSet.getString("mname")+facstdResultSet.getString("lname");
 	        				row[1] = name;
 	        			}
+	    				model.addRow(row);
 	        		}
 	        	}
 	        	else
@@ -70,9 +71,9 @@ public class ViewEditStdFac
 	        					name = facstdResultSet.getString("fname")+" "+facstdResultSet.getString("mname")+" "+facstdResultSet.getString("lname");
 	        				row[1] = name;
 	        			}
+	    				model.addRow(row);
 	        		}
 	        	}
-				model.addRow(row);
 	        }
 		}
 		catch(SQLException | ClassNotFoundException e)

@@ -8,7 +8,16 @@ public class User
     protected String userName;
     protected String password;
     protected String userType;
-
+	private String branch;
+	
+	public String getBranch()
+	{
+		return branch;
+	}
+	public void setBranch(String branch)
+	{
+		this.branch = branch;
+	}
     public String getUserType()
     {
         return userType;

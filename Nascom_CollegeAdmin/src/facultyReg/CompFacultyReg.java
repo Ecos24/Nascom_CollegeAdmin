@@ -132,6 +132,7 @@ public class CompFacultyReg
 		user.setUserName(registerUser.getUserName());
 		user.setUserType(registerUser.getUserType());
 		user.setPassword(registerUser.getPassword());
+		user.setBranch(registerUser.getBranch());
 		bgColor = new Color(238, 238, 238);
 		initializeFrame();
 		initComponents();
@@ -298,6 +299,7 @@ public class CompFacultyReg
 		facImageTextPane.setEditable(false);
 		facImagePathView = new JTextField();
 		facImagePathView.setEditable(false);
+		facImagePathView.setFocusable(false);
 		facImagePathView.setBounds(610, 140, 110, 20);
 		facImageBrowse = new JButton("...");
 		facImageBrowse.setBounds(718, 140, 20, 20);
@@ -534,6 +536,7 @@ public class CompFacultyReg
 					String imagePath = ImageFunctions.selectImage();
 					if (ImageFunctions.validateSelectedImage(imagePath))
 					{
+						imagePath = ImageFunctions.saveImage(imagePath,user.getUserName());
 						facImagePathView.setText(imagePath);
 					}
 					else
@@ -567,6 +570,7 @@ public class CompFacultyReg
 				user.setmName(facMiddelName.getText());
 				user.setlName(facLastName.getText());
 				user.setDob((Date)facDOB.getModel().getValue());
+				user.setImgPath(facImagePathView.getText());
 				user.setGender((String)facGender.getSelectedItem());
 				user.seteMail(facEmail.getText());
 				user.setMobNo(Long.parseLong(facMobNo.getText()));

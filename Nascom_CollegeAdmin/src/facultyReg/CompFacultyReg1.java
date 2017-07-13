@@ -167,8 +167,10 @@ public class CompFacultyReg1
 					return;
 				}
 				
-				user.setGuardianName(facGuardianName.getText());
+				user.setGuardianName((String)guardianSalutation.getSelectedItem()+
+						facGuardianName.getText());
 				user.setGuardianMobNo(Long.parseLong(facGuardianMobNo.getText()));
+				user.setGuardianOccupation((String)facGuardianOccupation.getSelectedItem());
 				user.setGuardianEMail(facGuardianEmail.getText());
 
 				CompFacultyReg2 reg = new CompFacultyReg2(user);

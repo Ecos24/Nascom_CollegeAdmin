@@ -122,6 +122,7 @@ public class CompStudentReg
 		this.user.setUserName(parentUser.getUserName());
 		this.user.setUserType(parentUser.getUserType());
 		this.user.setPassword(parentUser.getPassword());
+		this.user.setBranch(parentUser.getBranch());
 		bgColor = new Color(238, 238, 238);
 		initializeFrame();
 		initComponents();
@@ -293,6 +294,7 @@ public class CompStudentReg
 		stdImageTextPane.setEditable(false);
 		stdImagePathView = new JTextField();
 		stdImagePathView.setEditable(false);
+		stdImagePathView.setFocusable(false);
 		stdImagePathView.setBounds(610, 140, 110, 20);
 		stdImageBrowse = new JButton("...");
 		stdImageBrowse.setBounds(718, 140, 20, 20);
@@ -456,6 +458,7 @@ public class CompStudentReg
 					String imagePath = ImageFunctions.selectImage();
 					if( ImageFunctions.validateSelectedImage( imagePath ))
 					{
+						imagePath = ImageFunctions.saveImage(imagePath,user.getUserName());
 						stdImagePathView.setText(imagePath);
 					}
 					else
@@ -564,6 +567,7 @@ public class CompStudentReg
 				user.setmName(stdMiddelName.getText());
 				user.setlName(stdLastName.getText());
 				user.setDOB((Date)stdDOB.getModel().getValue());
+				user.setImagePath(stdImagePathView.getText());
 				user.setGender((String)stdGender.getSelectedItem());
 				user.seteMail(stdEmail.getText());
 				user.setMobNo(Long.parseLong(stdMobNo.getText()));

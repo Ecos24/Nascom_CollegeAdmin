@@ -3,6 +3,7 @@ package facultyReg;
 import beanClasses.FacultyUser;
 import extraClasses.GUIRegisterUtilityFunctions;
 import memberGUI.admin.MainGUI;
+import userRegLog.RegisterUser;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -12,6 +13,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -357,56 +359,57 @@ public class CompFacultyReg2
 		facTeachingSeparator.setBounds(20, 400, frameLength-80, 2);
 
 		// Row 1.
-		facTeachingSubjects1TextPane = new JTextPane();
-		facTeachingSubjects1TextPane.setBounds(20, 440, 80, 20);
-		facTeachingSubjects1TextPane.setBackground(bgColor);
-		facTeachingSubjects1TextPane.setText("Subject 1");
-		facTeachingSubjects1TextPane.setFocusable(false);
-		facTeachingSubjects1TextPane.setEditable(false);
-		String[] Teaching_Subject_1 = { "Select", "B.Tech", "M.Tech", "BCA", "MCA", "Ph.D" };
-		facTeachingSubjects1 = new JComboBox(Teaching_Subject_1);
-		facTeachingSubjects1.setBounds(110, 440, 130, 20);
-
-		facTeachingSubjects2TextPane = new JTextPane();
-		facTeachingSubjects2TextPane.setBounds(270, 440, 80, 20);
-		facTeachingSubjects2TextPane.setBackground(bgColor);
-		facTeachingSubjects2TextPane.setText("Subject 2");
-		facTeachingSubjects2TextPane.setFocusable(false);
-		facTeachingSubjects2TextPane.setEditable(false);
-		String[] Teaching_Subject_2 = { "Select", "B.Tech", "M.Tech", "BCA", "MCA", "Ph.D" };
-		facTeachingSubjects2 = new JComboBox(Teaching_Subject_2);
-		facTeachingSubjects2.setBounds(360, 440, 130, 20);
-
-		facTeachingSubjects3TextPane = new JTextPane();
-		facTeachingSubjects3TextPane.setBounds(530, 440, 80, 20);
-		facTeachingSubjects3TextPane.setBackground(bgColor);
-		facTeachingSubjects3TextPane.setText("Subject 3");
-		facTeachingSubjects3TextPane.setFocusable(false);
-		facTeachingSubjects3TextPane.setEditable(false);
-		String[] Teaching_Subject_3 = { "Select", "B.Tech", "M.Tech", "BCA", "MCA", "Ph.D" };
-		facTeachingSubjects3 = new JComboBox(Teaching_Subject_3);
-		facTeachingSubjects3.setBounds(620, 440, 130, 20);
-		
-		// Row 2.
 		facTeachingExperienceTextPane = new JTextPane();
-		facTeachingExperienceTextPane.setBounds(20, 480, 130, 20);
+		facTeachingExperienceTextPane.setBounds(20, 440, 130, 20);
 		facTeachingExperienceTextPane.setBackground(bgColor);
 		facTeachingExperienceTextPane.setText("Experience (in yrs)");
 		facTeachingExperienceTextPane.setFocusable(false);
 		facTeachingExperienceTextPane.setEditable(false);
 		String[] yrs_experience = { "Select", "< 1yr", "1 yr", "2-4 yrs", "5yrs", "6-10 yrs", "10+ yrs" };
 		facTeachingExperience = new JComboBox(yrs_experience);
-		facTeachingExperience.setBounds(150, 480, 130, 20);
+		facTeachingExperience.setBounds(150, 440, 130, 20);
 
 		facPreviousInstituteTextPane = new JTextPane();
-		facPreviousInstituteTextPane.setBounds(320, 480, 250, 20);
+		facPreviousInstituteTextPane.setBounds(320, 440, 250, 20);
 		facPreviousInstituteTextPane.setBackground(bgColor);
 		facPreviousInstituteTextPane.setText("Last taught at (full name of institute)");
 		facPreviousInstituteTextPane.setFocusable(false);
 		facPreviousInstituteTextPane.setEditable(false);
 		facPreviousInstitute = new JTextField();
-		facPreviousInstitute.setBounds(580, 480, 170, 20);
+		facPreviousInstitute.setBounds(580, 440, 170, 20);
+		
+		//Row 2
+		facTeachingSubjects1TextPane = new JTextPane();
+		facTeachingSubjects1TextPane.setBounds(20, 480, 80, 20);
+		facTeachingSubjects1TextPane.setBackground(bgColor);
+		facTeachingSubjects1TextPane.setText("Subject 1");
+		facTeachingSubjects1TextPane.setFocusable(false);
+		facTeachingSubjects1TextPane.setEditable(false);
+		String[] Teaching_Subject_1 = { "Select", "B.Tech", "M.Tech", "BCA", "MCA", "Ph.D" };
+		facTeachingSubjects1 = new JComboBox(Teaching_Subject_1);
+		facTeachingSubjects1.setBounds(110, 480, 130, 20);
 
+		facTeachingSubjects2TextPane = new JTextPane();
+		facTeachingSubjects2TextPane.setBounds(270, 480, 80, 20);
+		facTeachingSubjects2TextPane.setBackground(bgColor);
+		facTeachingSubjects2TextPane.setText("Subject 2");
+		facTeachingSubjects2TextPane.setFocusable(false);
+		facTeachingSubjects2TextPane.setEditable(false);
+		String[] Teaching_Subject_2 = { "Select", "B.Tech", "M.Tech", "BCA", "MCA", "Ph.D" };
+		facTeachingSubjects2 = new JComboBox(Teaching_Subject_2);
+		facTeachingSubjects2.setBounds(360, 480, 130, 20);
+
+		facTeachingSubjects3TextPane = new JTextPane();
+		facTeachingSubjects3TextPane.setBounds(530, 480, 80, 20);
+		facTeachingSubjects3TextPane.setBackground(bgColor);
+		facTeachingSubjects3TextPane.setText("Subject 3");
+		facTeachingSubjects3TextPane.setFocusable(false);
+		facTeachingSubjects3TextPane.setEditable(false);
+		String[] Teaching_Subject_3 = { "Select", "B.Tech", "M.Tech", "BCA", "MCA", "Ph.D" };
+		facTeachingSubjects3 = new JComboBox(Teaching_Subject_3);
+		facTeachingSubjects3.setBounds(620, 480, 130, 20);
+		
+		//Row 3
 		facPrepareHigherEduCheck = new JCheckBox("Continuing furthur studies?");
 		facPrepareHigherEduCheck.setBounds(20, 520, 250, 20);
 		facPrepareHigherEduTextPane = new JTextPane();
@@ -416,8 +419,8 @@ public class CompFacultyReg2
 		facPrepareHigherEduTextPane.setFocusable(false);
 		facPrepareHigherEduTextPane.setEditable(false);
 		facPrepareHigherEdu = new JTextField();
-		facPrepareHigherEdu.setBounds(270, 560, 250, 20);
 		facPrepareHigherEdu.setEnabled(false);
+		facPrepareHigherEdu.setBounds(270, 560, 250, 20);
 
 		facRegSubmit = new JButton("Register");
 		facRegSubmit.setBounds((frameLength/2 - 60), (frameheigth - 80), 120, 30);
@@ -449,13 +452,13 @@ public class CompFacultyReg2
 
 				// Entry to DB Logic
 				user.setClsXRollNo(facClsXRollNo.getText());
-				user.setClsXPassingYr((String)facClsXPassingYr.getSelectedItem());
+				user.setClsXPassingYr(Integer.parseInt((String)facClsXPassingYr.getSelectedItem()));
 				user.setClsXBoard((String)facClsXBoard.getSelectedItem());
-				user.setClsXIIRollNo(facClsXIIRollNo.getText());
-				user.setClsXIIPassingYr((String)facClsXIIPassingYr.getSelectedItem());
+				user.setClsXIIRollNo(Long.parseLong(facClsXIIRollNo.getText()));
+				user.setClsXIIPassingYr(Integer.parseInt((String)facClsXIIPassingYr.getSelectedItem()));
 				user.setClsXIIBoard((String)facClsXIIBoard.getSelectedItem());
 				user.setClsXIIMedium((String)facClsXIIMedium.getSelectedItem());
-				user.setClsXIIPercentage(facClsXIIPercnetage.getText());
+				user.setClsXIIPercentage(Float.parseFloat(facClsXIIPercnetage.getText()));
 				user.setHighestQual((String)facHighestQual.getSelectedItem());
 				user.setHighestQualFrom(facHighestQualFrom.getText());
 				user.setSubject1((String)facTeachingSubjects1.getSelectedItem());
@@ -463,6 +466,35 @@ public class CompFacultyReg2
 				user.setSubject3((String)facTeachingSubjects3.getSelectedItem());
 				user.setPersuingCourse(facPrepareHigherEduCheck.isSelected());
 				user.setNameOfPersuingCourse(facPrepareHigherEdu.getText());
+				
+				// Entry to DB Logic
+                try
+                {
+                	if( RegisterUser.registerFacultyUser(user) )
+                	{
+	                    System.out.println("User Registered");
+	                	JOptionPane.showMessageDialog(null, "User Registered");
+	                }
+	                else
+	                {
+	                	JOptionPane.showMessageDialog(compFacultyReg2, "User Not Registered");
+	                }
+                }
+                catch(ClassNotFoundException e)
+                {
+                	System.out.println("JDBC connector Class Not Found.");
+                	JOptionPane.showMessageDialog(compFacultyReg2, "User Not Registered Internal Application Error!!");
+				}
+                catch(SQLException e)
+                {                	
+                	System.out.println("Exception --> "+e.getMessage());
+                	JOptionPane.showMessageDialog(compFacultyReg2, "User Not Registered Internal Application Error!!");
+				}
+                
+                // Redirect to Admin UI.
+                MainGUI admin = new MainGUI();
+                admin.adminMainGUI.setVisible(true);
+                compFacultyReg2.dispose();
 			}
 		});
 		
@@ -473,13 +505,11 @@ public class CompFacultyReg2
 				if(facPrepareHigherEduCheck.isSelected())
 				{
 					facPrepareHigherEdu.setEnabled(true);
-					facPrepareHigherEdu.setFocusable(true);
 				}
 				else
 				{
 					facPrepareHigherEdu.setText(null);
 					facPrepareHigherEdu.setEnabled(false);
-					facPrepareHigherEdu.setFocusable(false);
 				}
 			}
 		});

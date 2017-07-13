@@ -317,45 +317,6 @@ public class CompStudentReg2
 				{
 					return;
 				}
-				/*user = new StudentUser();
-				user.setUserName("2014BCS1195");
-				user.setUserType("Student");
-				user.setPassword("hello");
-				user.setfName("Divyang");
-				user.setlName("Tyagi");
-				user.setDOB(new Date(1996,03,24));
-				user.setGender("Male");
-				user.seteMail("divyang@gmail.com");
-				user.setMobNo(9899855632l);
-				user.setCategory("GEN");
-				user.setCity("Ghaziabad");
-				user.setState("UT");
-				user.setPinconde(201010);
-				user.setAdd("Vaishali");
-				user.setCorespCity("Ghaziabad");
-				user.setCorespState("UT");
-				user.setCorespPinconde(201010);
-				user.setCorespAdd("Vaishali");
-				user.setFatherName("Naresh Pal Tyagi");
-				user.setFatherEMail("nareshpaltyagi@gmail.com");
-				user.setFatherMobNo(9410028356l);
-				user.setFatherOccupation("Engineer");
-				user.setMotherName("Poonam Tyagi");
-				user.setMotherEMail("poonamtyagi1969@gmail.com");
-				user.setMotherMobNo(8447246190l);
-				user.setMotherOccupation("Self Employeed");
-				user.setClsXRollNo("1234569");
-				user.setClsXPassingYr(2011);
-				user.setClsXSchool("ST. Thomas School Ghaziabad");
-				user.setClsXBoard("CBSE");
-				user.setClsXMedium("English");
-				user.setClsXPercentage(85.5f);
-				user.setClsXIIRollNo(98765432l);
-				user.setClsXIIPassingYr(2013);
-				user.setClsXIISchool("ST. Thomas School Ghaziabad");
-				user.setClsXIIBoard("CBSE");
-				user.setClsXIIMedium("English");
-				user.setClsXIIPercentage(86.5f);*/
 				
 				user.setClsXRollNo(stdClsXRollNo.getText());
 				user.setClsXPassingYr(Integer.parseInt((String)stdClsXPassingYr.getSelectedItem()));

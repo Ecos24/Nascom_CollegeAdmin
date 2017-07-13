@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import tableCreateQuery.CommonQuerys;
+import tableCreateQuery.FacultyQuerys;
 import tableCreateQuery.StudentQuerys;
 
 /**
@@ -37,7 +38,14 @@ public class GetDBConnection
             //////// STUDENT TABLES ////////
             DBUtilityFunctions.checkTableForReg(con ,ReadProjectProperties.getProp("TNSTDPERSONALDETAILS"), StudentQuerys.getStudentPersonalCreateQuery());
             //////// SUBJECT TABLES ////////
-            DBUtilityFunctions.checkTableForReg(con ,ReadProjectProperties.getProp("TNSUBJECT"), StudentQuerys.getStudentPersonalCreateQuery());
+            DBUtilityFunctions.checkTableForReg(con ,ReadProjectProperties.getProp("TNSUBJECT"), CommonQuerys.getSubjectCreateQuery());
+            //////// FACULTY TABLES ////////
+            // Check Faculty's Higher Education table.
+            DBUtilityFunctions.checkTableForReg(con ,ReadProjectProperties.getProp("TNFACHIGHEREDU"), FacultyQuerys.getHigheducreatequery());
+            // Check Faculty's Subject Mapping table.
+            DBUtilityFunctions.checkTableForReg(con ,ReadProjectProperties.getProp("TNFACSUB"), FacultyQuerys.getFacsubcreatequery());
+            // Check Faculty's Personal Details table.
+            DBUtilityFunctions.checkTableForReg(con ,ReadProjectProperties.getProp("TNFACPERSONAL"), FacultyQuerys.getFacpercreatequery());
             
             System.out.println("All well with DB");
         }

@@ -1,5 +1,7 @@
 package tableCreateQuery;
 
+import dbConnection.ReadProjectProperties;
+
 public class StudentQuerys
 {
 	public static String getStudentPersonalCreateQuery()
@@ -7,13 +9,15 @@ public class StudentQuerys
 		return studentPersonalCreateQuery;
 	}
 	
-	private static String studentPersonalCreateQuery = "CREATE TABLE `Nascom`.`STDPERSONALDETAILS` ("
+	private static final String studentPersonalCreateQuery = "CREATE TABLE `Nascom`.`"+
+												ReadProjectProperties.getProp("TNSTDPERSONALDETAILS")+"` ("
 												+ "`stdid` VARCHAR(50) NOT NULL,"
 												+ "`fname` VARCHAR(30) NOT NULL,"
 												+ "`mname` VARCHAR(30) NULL,"
 												+ "`lname` VARCHAR(30) NOT NULL,"
 												+ "`dob` DATE NOT NULL,"
 												+ "`gender` VARCHAR(15) NOT NULL,"
+												+ "`branch` VARCHAR(10) NOT NULL,"
 												+ "`email` VARCHAR(250) NOT NULL,"
 												+ "`mobno` BIGINT NOT NULL,"
 												+ "`category` VARCHAR(15) NOT NULL,"

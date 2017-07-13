@@ -80,6 +80,16 @@ public class MainGUI
 				adminMainGUI.dispose();
 			}
 		});
+		viewEditFac.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+			{
+				ViewAllFac viewFac = new ViewAllFac();
+				viewFac.viewEditFac.setVisible(true);
+				adminMainGUI.dispose();
+			}
+		});
 		
 		regStdFac.addActionListener(new ActionListener()
 		{	

@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -15,6 +16,8 @@ import beanClasses.User;
 import facultyReg.CompFacultyReg;
 import memberGUI.admin.MainGUI;
 import studentReg.CompStudentReg;
+import userRegLog.RegisterUtility;
+
 import javax.swing.JComboBox;
 import java.awt.Color;
 
@@ -26,6 +29,9 @@ public class Register
 	private JTextField userName;
 	@SuppressWarnings("rawtypes")
 	private JComboBox profileType;
+	@SuppressWarnings("rawtypes")
+	private JComboBox userBranch;
+	private JTextPane userBranchTextPane;
 	private JTextPane userNameTextPane;
 	private JTextPane passwordTextPane;
 	private JTextPane userTypeTextPane;
@@ -47,6 +53,8 @@ public class Register
 		regFrame.getContentPane().add(userName);
 		regFrame.getContentPane().add(password);
 		regFrame.getContentPane().add(profileType);
+		regFrame.getContentPane().add(userBranch);
+		regFrame.getContentPane().add(userBranchTextPane);
 		regFrame.getContentPane().add(userNameTextPane);
 		regFrame.getContentPane().add(passwordTextPane);
 		regFrame.getContentPane().add(userTypeTextPane);
@@ -60,23 +68,34 @@ public class Register
 	{		
 		userTypeTextPane = new JTextPane();
 		userTypeTextPane.setBackground(bgColor);
-		userTypeTextPane.setBounds(35, 50, 80, 20);
+		userTypeTextPane.setBounds(35, 30, 80, 20);
 		userTypeTextPane.setText("Profile Type");
 		userTypeTextPane.setEditable(false);
 		userTypeTextPane.setFocusable(false);
 		String[] profileTypeChoices = {"Select","Student","Faculty"};
 		profileType = new JComboBox(profileTypeChoices);
 		profileType.setSelectedIndex(0);
-		profileType.setBounds(135, 50, 154, 20);
+		profileType.setBounds(135, 30, 154, 20);
+		
+		userBranchTextPane = new JTextPane();
+		userBranchTextPane.setBackground(bgColor);
+		userBranchTextPane.setBounds(35, 70, 80, 20);
+		userBranchTextPane.setText("Branch");
+		userBranchTextPane.setEditable(false);
+		userBranchTextPane.setFocusable(false);
+		String[] userBranchChoices = { "Select", "BCS", "BIT", "BCE", "BME", "BEC", "BEE" };
+		userBranch = new JComboBox(userBranchChoices);
+		userBranch.setSelectedIndex(0);
+		userBranch.setBounds(135, 70, 154, 20);
 
 		userNameTextPane = new JTextPane();
 		userNameTextPane.setBackground(bgColor);
-		userNameTextPane.setBounds(35, 100, 80, 20);
+		userNameTextPane.setBounds(35, 110, 80, 20);
 		userNameTextPane.setText("User Name");
 		userNameTextPane.setEditable(false);
 		userNameTextPane.setFocusable(false);
 		userName = new JTextField();
-		userName.setBounds(135, 100, 154, 20);
+		userName.setBounds(135, 110, 154, 20);
 		userName.setEnabled(false);
 
 		passwordTextPane = new JTextPane();
@@ -89,7 +108,7 @@ public class Register
 		password.setBounds(135, 150, 154, 20);
 		
 		Register = new JButton("Register");
-		Register.setBounds(147, 198, 131, 20);
+		Register.setBounds(147, 200, 131, 20);
 	}
 
 	/////////////////////////////////////////////////////////////////////////
@@ -98,18 +117,75 @@ public class Register
 	private void initListeners()
 	{
 		profileType.addActionListener(new ActionListener()
+		{	
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				if( userBranch.getSelectedIndex() != 0 )
+				{
+					if (profileType.getItemAt(profileType.getSelectedIndex()).toString().toLowerCase()
+							.equals("student"))
+					{
+						try
+						{
+							String id = RegisterUtility.getNewStdId((String)userBranch.getSelectedItem());
+							userName.setText(id);
+						}
+						catch(ClassNotFoundException | SQLException err)
+						{
+							System.out.println(err.getClass().getName()+" Exception Occured while getting new Id --> "+err.getMessage());
+						}
+					}
+					else if (profileType.getItemAt(profileType.getSelectedIndex()).toString().toLowerCase()
+							.equals("faculty"))
+					{
+						try
+						{
+							String id = RegisterUtility.getNewFacId((String)userBranch.getSelectedItem());
+							userName.setText(id);
+						}
+						catch(ClassNotFoundException | SQLException err)
+						{
+							System.out.println(err.getClass().getName()+" Exception Occured while getting new Id --> "+err.getMessage());
+						}
+					}
+				}
+			}
+		});
+		userBranch.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
+				if( userBranch.getSelectedIndex() == 0 )
+				{
+					userName.setText(null);
+					return;
+				}
 				if (profileType.getItemAt(profileType.getSelectedIndex()).toString().toLowerCase().equals("student"))
 				{
-					// Code to fetch next ID from DB.
-					userName.setText("STD2014bbs");
+					try
+					{
+						String id = RegisterUtility.getNewStdId((String)userBranch.getSelectedItem());
+						userName.setText(id);
+					}
+					catch(ClassNotFoundException | SQLException err)
+					{
+						System.out.println(err.getClass().getName()+" Exception Occured while getting new Id --> "+err.getMessage());
+					}
+					
 				}
 				else if (profileType.getItemAt(profileType.getSelectedIndex()).toString().toLowerCase()
 						.equals("faculty"))
 				{
-					userName.setText("FAC2014bbs");
+					try
+					{
+						String id = RegisterUtility.getNewFacId((String)userBranch.getSelectedItem());
+						userName.setText(id);
+					}
+					catch(ClassNotFoundException | SQLException e)
+					{
+						System.out.println(e.getClass().getName()+" Exception Occured while getting new Id --> "+e.getMessage());
+					}
 				}
 			}
 		});
@@ -118,12 +194,14 @@ public class Register
 			public void actionPerformed(ActionEvent arg0)
 			{
 				String userN = userName.getText().toLowerCase();
+				String userB = (String)userBranch.getSelectedItem();
 				String pass = String.valueOf(password.getPassword());
 				String userT = profileType.getItemAt(profileType.getSelectedIndex()).toString().toLowerCase();
 				if(!userN.equals("") && !pass.equals(""))
 				{
 					User user = new User();
 					user.setUserName(userN);
+					user.setBranch(userB);
 					user.setPassword(pass);
 					user.setUserType(userT);
 
@@ -142,7 +220,11 @@ public class Register
 				}
 				else if(userN.equals(""))
 				{
-					JOptionPane.showMessageDialog(regFrame, "Please provide Profile Type!!");
+					JOptionPane.showMessageDialog(regFrame, "Please provide Profile Type & Branch Both!!");
+				}
+				else if( userB.equals("Select"))
+				{
+					JOptionPane.showMessageDialog(regFrame, "Please provide Branch!!");
 				}
 				else if(pass.equals(""))
 				{

@@ -2,6 +2,12 @@ package extraClasses;
 
 import java.awt.Image;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import org.apache.commons.io.FileUtils;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -13,6 +19,35 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class ImageFunctions
 {
+	/**
+	 * This function saves the given file path to project's directory and return's it's path.
+	 * @param imgPath
+	 * @param userName
+	 * @return saved Image Path.
+	 */
+	public static String saveImage(String imgPath, String userName)
+	{
+		String dest = "profilePics";
+		File sourceMain = new File(imgPath);
+		File dstFolder = new File(dest);
+		
+		try
+		{
+			FileUtils.copyFileToDirectory(sourceMain, dstFolder);
+			File source = new File(dest+File.separator+getImageName(imgPath));
+			dstFolder = new File(dest+File.separator+userName+getImageExtention(imgPath));
+			Path extra = Paths.get(dest+File.separator+userName+getImageExtention(imgPath));
+			Files.deleteIfExists(extra);
+			FileUtils.moveFile(source, dstFolder);
+			return dstFolder.getAbsolutePath();
+		}
+		catch(IOException e)
+		{
+			System.out.println(e.getClass().getName()+" Exception occured while saving file --> "+e.getMessage() );
+		}
+		return null;
+	}
+	
 	/**
 	 * This function resizes the image at the give image path.
 	 * @param imagePath
@@ -27,7 +62,7 @@ public class ImageFunctions
 	
 	/**
 	 * This function setup's the Image Selector for user and return's the path of selected Image.
-	 * @return immage path
+	 * @return image path
 	 */
 	public static String selectImage()
 	{
@@ -40,13 +75,39 @@ public class ImageFunctions
 		if( result == JFileChooser.APPROVE_OPTION )
 		{
 			File selectedImage = browseImage.getSelectedFile();
-			System.out.println(selectedImage.getAbsolutePath());
 			return selectedImage.getAbsolutePath();
 		}
 		else if( result == JFileChooser.CANCEL_OPTION )
 		{
 			System.out.println("No File Selected");
 			return null;
+		}
+		return null;
+	}
+	
+	/**
+	 * This function gives the file name of the specified path.
+	 * @param imagePath
+	 * @return fileName
+	 */
+	public static String getImageName(String imagePath)
+	{
+		int p = imagePath.lastIndexOf(File.separator);
+		return imagePath.substring((p+1),imagePath.length());
+	}
+	
+	/**
+	 * This function gives the file extention at the specified path.
+	 * @param imagePath
+	 * @return
+	 */
+	public static String getImageExtention(String imagePath)
+	{
+		int i = imagePath.lastIndexOf(".");
+		int p = imagePath.lastIndexOf("/");
+		if( i > p )
+		{
+			return imagePath.substring(i);
 		}
 		return null;
 	}

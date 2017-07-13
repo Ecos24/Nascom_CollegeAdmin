@@ -41,7 +41,7 @@ public class MainFrame
 	{
 		try
 		{
-			java.sql.Connection con = GetDBConnection.getConnection();
+			GetDBConnection.getConnection();
 		}
 		catch(ClassNotFoundException | SQLException e)
 		{
@@ -62,6 +62,7 @@ public class MainFrame
 		bgColor = new Color(238, 238, 238);
 		initializeFrame();
 		initComponents();
+		initListeners();
 		associateFrameComponents();
 	}
 	
@@ -105,10 +106,14 @@ public class MainFrame
 		bgLabel = new JLabel();
 		bgLabel.setBounds(190, 20, 61, 85);
 		bgLabel.setIcon(new ImageIcon("images/logo.png"));
-		
-		/////////////////////////////////////////////////////////////////////////
-		//////////////////////////Listner's///////////////////////////////////////
-		/////////////////////////////////////////////////////////////////////////
+	}
+	
+
+	/////////////////////////////////////////////////////////////////////////
+	//////////////////////////Listeners//////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////
+	private void initListeners()
+	{
 		LogIn.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)

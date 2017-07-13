@@ -25,18 +25,19 @@ public class FacultyUser extends User
 	private String guardianName;
 	private long guardianMobNo;
 	private String guardianEMail;
+	private String guardianOccupation;
 	private String clsXRollNo;
-	private String clsXPassingYr;
+	private int clsXPassingYr;
 	private String clsXBoard;
-	private String clsXIIRollNo;
-	private String clsXIIPassingYr;
+	private long clsXIIRollNo;
+	private int clsXIIPassingYr;
 	private String clsXIIBoard;
-	private String clsXIIPercentage;
+	private float clsXIIPercentage;
 	private String clsXIIMedium;
 	private String highestQual;
 	private String highestQualFrom;
-	private String highestQualAggregate;
-	private String highestQualPassingYr;
+	private float highestQualAggregate;
+	private int highestQualPassingYr;
 	private int experienceYr;
 	private String lastTaught;
 	private String subject1;
@@ -45,6 +46,14 @@ public class FacultyUser extends User
 	private boolean persuingCourse;
 	private String nameOfPersuingCourse;
 	
+	public String getGuardianOccupation()
+	{
+		return guardianOccupation;
+	}
+	public void setGuardianOccupation(String guardianOccupation)
+	{
+		this.guardianOccupation = guardianOccupation;
+	}
 	public boolean isPersuingCourse()
 	{
 		return persuingCourse;
@@ -229,11 +238,11 @@ public class FacultyUser extends User
 	{
 		this.clsXRollNo = clsXRollNo;
 	}
-	public String getClsXPassingYr()
+	public int getClsXPassingYr()
 	{
 		return clsXPassingYr;
 	}
-	public void setClsXPassingYr(String clsXPassingYr)
+	public void setClsXPassingYr(int clsXPassingYr)
 	{
 		this.clsXPassingYr = clsXPassingYr;
 	}
@@ -245,19 +254,19 @@ public class FacultyUser extends User
 	{
 		this.clsXBoard = clsXBoard;
 	}
-	public String getClsXIIRollNo()
+	public long getClsXIIRollNo()
 	{
 		return clsXIIRollNo;
 	}
-	public void setClsXIIRollNo(String clsXIIRollNo)
+	public void setClsXIIRollNo(long clsXIIRollNo)
 	{
 		this.clsXIIRollNo = clsXIIRollNo;
 	}
-	public String getClsXIIPassingYr()
+	public int getClsXIIPassingYr()
 	{
 		return clsXIIPassingYr;
 	}
-	public void setClsXIIPassingYr(String clsXIIPassingYr)
+	public void setClsXIIPassingYr(int clsXIIPassingYr)
 	{
 		this.clsXIIPassingYr = clsXIIPassingYr;
 	}
@@ -269,11 +278,11 @@ public class FacultyUser extends User
 	{
 		this.clsXIIBoard = clsXIIBoard;
 	}
-	public String getClsXIIPercentage()
+	public float getClsXIIPercentage()
 	{
 		return clsXIIPercentage;
 	}
-	public void setClsXIIPercentage(String clsXIIPercentage)
+	public void setClsXIIPercentage(float clsXIIPercentage)
 	{
 		this.clsXIIPercentage = clsXIIPercentage;
 	}
@@ -301,19 +310,19 @@ public class FacultyUser extends User
 	{
 		this.highestQualFrom = highestQualFrom;
 	}
-	public String getHighestQualAggregate()
+	public float getHighestQualAggregate()
 	{
 		return highestQualAggregate;
 	}
-	public void setHighestQualAggregate(String highestQualAggregate)
+	public void setHighestQualAggregate(float highestQualAggregate)
 	{
 		this.highestQualAggregate = highestQualAggregate;
 	}
-	public String getHighestQualPassingYr()
+	public int getHighestQualPassingYr()
 	{
 		return highestQualPassingYr;
 	}
-	public void setHighestQualPassingYr(String highestQualPassingYr)
+	public void setHighestQualPassingYr(int highestQualPassingYr)
 	{
 		this.highestQualPassingYr = highestQualPassingYr;
 	}
