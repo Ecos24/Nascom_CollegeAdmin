@@ -572,6 +572,7 @@ public class CompStudentReg
 				user.setCity((String)stdAddCity.getSelectedItem());
 				user.setPinconde(Integer.parseInt(stdAddPincode.getText()));
 				user.setAdd(stdAddHome.getText());
+				user.setCorespFlag(stdCorespChoice.isSelected());
 				user.setCorespState((String)stdCorespAddState.getSelectedItem());
 				user.setCorespCity((String)stdCorespAddCity.getSelectedItem());
 				user.setCorespPinconde(Integer.parseInt(stdCorespAddPincode.getText()));
@@ -624,8 +625,7 @@ public class CompStudentReg
 		Date selectedDate = (Date) stdDOB.getModel().getValue();
 		if( stdFirstName.getText().equals("") || stdLastName.getText().equals("") || 
 				stdGender.getSelectedIndex() == 0 || selectedDate == null ||
-				stdEmail.getText().equals("") || stdMobNo.getText().equals("") || 
-				stdCorespAddCity.getSelectedIndex() == 0 )
+				stdEmail.getText().equals("") || stdMobNo.getText().equals("") )
 		{
 			JOptionPane.showMessageDialog(null, "Complete Personal Details");
 			return false;

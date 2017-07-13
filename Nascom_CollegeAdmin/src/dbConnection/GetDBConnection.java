@@ -36,7 +36,8 @@ public class GetDBConnection
             DBUtilityFunctions.checkTableForReg(con ,ReadProjectProperties.getProp("TNEDUCATION"), CommonQuerys.getEducationCreateQuery());
             //////// STUDENT TABLES ////////
             DBUtilityFunctions.checkTableForReg(con ,ReadProjectProperties.getProp("TNSTDPERSONALDETAILS"), StudentQuerys.getStudentPersonalCreateQuery());
-            //////// FACULTY TABLES ////////
+            //////// SUBJECT TABLES ////////
+            DBUtilityFunctions.checkTableForReg(con ,ReadProjectProperties.getProp("TNSUBJECT"), StudentQuerys.getStudentPersonalCreateQuery());
             
             System.out.println("All well with DB");
         }

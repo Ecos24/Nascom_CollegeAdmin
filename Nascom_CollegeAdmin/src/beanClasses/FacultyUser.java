@@ -1,10 +1,13 @@
 package beanClasses;
 
+import java.sql.Date;
+
 public class FacultyUser extends User
 {
 	private String fName;
 	private String mName;
 	private String lName;
+	private Date dob;
 	private String gender;
 	private String eMail;
 	private long mobNo;
@@ -14,14 +17,14 @@ public class FacultyUser extends User
 	private String city;
 	private int pinCode;
 	private String add;
+	private boolean corespAddFlag;
 	private String corespState;
 	private String corespCity;
 	private int corespPinCode;
 	private String corespAdd;
 	private String guardianName;
-	private String guardianMobNo;
+	private long guardianMobNo;
 	private String guardianEMail;
-	private String guardianAdd;
 	private String clsXRollNo;
 	private String clsXPassingYr;
 	private String clsXBoard;
@@ -39,8 +42,33 @@ public class FacultyUser extends User
 	private String subject1;
 	private String subject2;
 	private String subject3;
+	private boolean persuingCourse;
 	private String nameOfPersuingCourse;
 	
+	public boolean isPersuingCourse()
+	{
+		return persuingCourse;
+	}
+	public void setPersuingCourse(boolean persuingCourse)
+	{
+		this.persuingCourse = persuingCourse;
+	}
+	public boolean isCorespAddFlag()
+	{
+		return corespAddFlag;
+	}
+	public void setCorespAddFlag(boolean corespAddFlag)
+	{
+		this.corespAddFlag = corespAddFlag;
+	}
+	public Date getDob()
+	{
+		return dob;
+	}
+	public void setDob(Date dob)
+	{
+		this.dob = dob;
+	}
 	public String getfName()
 	{
 		return fName;
@@ -177,11 +205,11 @@ public class FacultyUser extends User
 	{
 		this.guardianName = guardianName;
 	}
-	public String getGuardianMobNo()
+	public long getGuardianMobNo()
 	{
 		return guardianMobNo;
 	}
-	public void setGuardianMobNo(String guardianMobNo)
+	public void setGuardianMobNo(long guardianMobNo)
 	{
 		this.guardianMobNo = guardianMobNo;
 	}
@@ -192,14 +220,6 @@ public class FacultyUser extends User
 	public void setGuardianEMail(String guardianEMail)
 	{
 		this.guardianEMail = guardianEMail;
-	}
-	public String getGuardianAdd()
-	{
-		return guardianAdd;
-	}
-	public void setGuardianAdd(String guardianAdd)
-	{
-		this.guardianAdd = guardianAdd;
 	}
 	public String getClsXRollNo()
 	{

@@ -55,10 +55,20 @@ public class CommonQuerys
 	{
 		return "SELECT gid from "+ReadProjectProperties.getProp("TNGUARDIAN")+" ORDER BY gid DESC LIMIT 1";
 	}
+	
+	public static String getSubjectCreateQuery()
+	{
+		return subjectCreateQuery;
+	}
 
 	private static String usersCreateQuery = "create table USERS( userid varchar(50) primary key,"
 									  + " usertype varchar(20) not null, password varchar(100) not null);";
 
+	private static String subjectCreateQuery = "CREATE TABLE `Nascom`.`"+ReadProjectProperties.getProp("TNSUBJECT")+"` ("
+			+ "`subcode` VARCHAR(10) NOT NULL,"
+			+ "`subname` VARCHAR(80) NOT NULL,"
+			+ "PRIMARY KEY (`subcode`));";
+	
 	private static String addressCreateQuery = "CREATE TABLE `Nascom`.`"+ReadProjectProperties.getProp("TNADDRESS")+"` ("
 			+ "`addid` INT NOT NULL AUTO_INCREMENT,"
 			+ "`state` VARCHAR(50) NOT NULL,"
