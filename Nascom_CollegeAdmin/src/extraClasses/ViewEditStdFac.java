@@ -17,7 +17,7 @@ import dbConnection.ReadProjectProperties;
 public class ViewEditStdFac
 {
 	/**
-	 * Funciton populates the given model with the data from DataBase.
+	 * Function populates the given model with the data from DataBase.
 	 * @param model
 	 * @param facFlag
 	 */
@@ -42,7 +42,7 @@ public class ViewEditStdFac
 	        		{
 	        			row[0] = userResultSet.getString("userid");
 	        			String query = "SELECT fname, mname, lname FROM "+
-	        					ReadProjectProperties.getProp("TNSTDPERSONALDETAILS")+ " WHERE stdid = '"+
+	        					ReadProjectProperties.getProp("TNFACPERSONAL")+ " WHERE facid = '"+
 	        					row[0]+ "';";
 	        			facstdResultSet = stfacstd.executeQuery(query);
 	        			while( facstdResultSet.next() )

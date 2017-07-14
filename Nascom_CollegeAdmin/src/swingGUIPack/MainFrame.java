@@ -29,7 +29,7 @@ public class MainFrame
 	private static final int frameheigth = 300;
 	private Color bgColor;
 	
-	private JFrame logInFrame;
+	public JFrame logInFrame;
 	private JButton LogIn;
 	private JPasswordField password;
 	private JTextField userName;

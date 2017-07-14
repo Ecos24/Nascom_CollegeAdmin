@@ -3,6 +3,8 @@ package memberGUI.admin;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -122,5 +124,15 @@ public class MainGUI
 		adminMainGUI.getContentPane().setLayout(null);
 		adminMainGUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		adminMainGUI.setResizable(false);
+		
+		adminMainGUI.addWindowListener( new WindowAdapter()
+		{
+			@Override
+			public void windowClosing(WindowEvent arg0)
+			{
+				new MainFrame();
+				super.windowClosing(arg0);
+			}
+		});
 	}
 }

@@ -1,8 +1,12 @@
 package memberGUI.faculty;
 
 import java.awt.Color;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
+
+import swingGUIPack.MainFrame;
 
 public class MainFacultyGUI
 {
@@ -43,5 +47,15 @@ public class MainFacultyGUI
 		facultyFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//studentFrame.setVisible(true);
 		facultyFrame.setResizable(false);
+		
+		facultyFrame.addWindowListener( new WindowAdapter()
+		{
+			@Override
+			public void windowClosing(WindowEvent arg0)
+			{
+				new MainFrame();
+				super.windowClosing(arg0);
+			}
+		});
 	}
 }
