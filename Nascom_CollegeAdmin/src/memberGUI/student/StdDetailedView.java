@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 
 import javax.swing.*;
 import beanClasses.StudentUser;
+import extraClasses.ImageFunctions;
 import extraClasses.ReadStudentUser;
 
 public class StdDetailedView
@@ -44,7 +45,7 @@ public class StdDetailedView
 	private JTextField stdMobNo;
 	private JTextPane stdCategoryTextPane;
 	private JTextField stdCategory;
-	private JPanel imagePanel;
+	private JLabel imagePanel;
 	// Section 2.
 	private JTextPane section2Header;
 	private JSeparator section2Seperator;
@@ -117,6 +118,7 @@ public class StdDetailedView
 			stdClsXIIMedium.setText(user.getClsXIIMedium());
 			stdClsXIIPassingYr.setText(String.valueOf(user.getClsXIIPassingYr()));
 			stdClsXIIPercentage.setText(String.valueOf(user.getClsXIIPercentage()));
+			imagePanel.setIcon(ImageFunctions.resizeImage(user.getImagePath()));
 		}
 		catch(ClassNotFoundException | SQLException e)
 		{
@@ -295,7 +297,7 @@ public class StdDetailedView
 		stdCategory = new JTextField();
 		stdCategory.setBounds(269, 140, 75, 20);
 
-		imagePanel = new JPanel();
+		imagePanel = new JLabel();
 		imagePanel.setBackground(Color.WHITE);
 		imagePanel.setBounds(678, 56, 106, 114);
 
