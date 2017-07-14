@@ -5,11 +5,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import beanClasses.FacultyUser;
 import beanClasses.StudentUser;
 import dbConnection.GetDBConnection;
 import dbConnection.ReadProjectProperties;
 
-public class ReadStudentUser
+public class ReadFacStudentUser
 {
 	public static StudentUser readUser(String stdid)
 			throws ClassNotFoundException, SQLException
@@ -32,6 +33,7 @@ public class ReadStudentUser
 			user.setCategory(rs.getString("category"));
 			user.setImagePath(rs.getString("imagepath"));
 			int addid = rs.getInt("addid");
+			@SuppressWarnings("unused")
 			int corespaddid = rs.getInt("corespaddid");
 			user.setClsXRollNo(rs.getString("clsxrollno"));
 			user.setClsXIIRollNo(Long.parseLong(rs.getString("clsxiirollno")));
@@ -91,5 +93,11 @@ public class ReadStudentUser
 			}
 		}
 		return user;
+	}
+
+	public static FacultyUser readFacUser(String facid)
+			throws ClassNotFoundException, SQLException
+	{
+		return null;
 	}
 }

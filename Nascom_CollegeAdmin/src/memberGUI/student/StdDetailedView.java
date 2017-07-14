@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat;
 import javax.swing.*;
 import beanClasses.StudentUser;
 import extraClasses.ImageFunctions;
-import extraClasses.ReadStudentUser;
+import extraClasses.ReadFacStudentUser;
 
 public class StdDetailedView
 {
@@ -19,6 +19,7 @@ public class StdDetailedView
 	private static final int framey = 100;
 	private static final int frameLength = 800;
 	private static final int frameheigth = 550;
+	@SuppressWarnings("unused")
 	private static String level;
 	private Color bgColor;
 	
@@ -98,7 +99,7 @@ public class StdDetailedView
 		StudentUser user;
 		try
 		{
-			user = ReadStudentUser.readUser(userid);
+			user = ReadFacStudentUser.readUser(userid);
 			stdName.setText(user.getfName()+" "+user.getlName()+" "+user.getlName());
 			stdFatherName.setText(user.getFatherName());
 			stdMotherName.setText(user.getMotherName());

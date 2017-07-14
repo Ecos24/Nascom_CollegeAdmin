@@ -56,7 +56,7 @@ public class ImageFunctions
 	public static ImageIcon resizeImage(String imagePath)
 	{
 		Image img = new ImageIcon(imagePath).getImage();
-		Image resize = img.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+		Image resize = img.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
 		return new ImageIcon(resize);
 	}
 	

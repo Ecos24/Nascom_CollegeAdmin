@@ -146,7 +146,7 @@ public class MainFrame
 		                	}
 		                	else if( authUser.getString("usertype").equals("faculty") )
 		                	{
-		                		MainFacultyGUI faculty = new MainFacultyGUI();
+		                		MainFacultyGUI faculty = new MainFacultyGUI(authUser.getString("userid"));
 		                		faculty.facultyFrame.setVisible(true);
 		                		logInFrame.dispose();
 		                	}
