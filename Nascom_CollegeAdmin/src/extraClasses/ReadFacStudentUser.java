@@ -150,7 +150,7 @@ public class ReadFacStudentUser
 				user.setGuardianOccupation(rs2.getString("occupation"));
 			}
 			Statement st3 = con.createStatement();
-			ResultSet rs3 = st3.executeQuery("SELECT * FROM "+ReadProjectProperties.getProp("TNFACHIGHEREDU")+" WHERE gid = '"+higheduid+"';");
+			ResultSet rs3 = st3.executeQuery("SELECT * FROM "+ReadProjectProperties.getProp("TNFACHIGHEREDU")+" WHERE fachighid = '"+higheduid+"';");
 			while( rs3.next() )
 			{
 				user.setHighestQual(rs3.getString("highqual"));

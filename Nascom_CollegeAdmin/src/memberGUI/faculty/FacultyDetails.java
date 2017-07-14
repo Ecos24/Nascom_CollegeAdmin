@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -71,6 +69,7 @@ public class FacultyDetails
 	public FacultyDetails(String fid, String className)
 	{
 		this.facid = fid;
+		System.out.println(fid);
 		if( className.equals("memberGUI.admin.ViewAllFac"))
 			level = "admin";
 		else if( className.equals("memberGUI.faculty.ViewStd"))
@@ -89,7 +88,20 @@ public class FacultyDetails
 		try
 		{
 			user = ReadFacStudentUser.readFacUser(facid);
-			
+			nameTextField.setText(user.getfName()+" "+user.getmName()+" "+user.getlName());
+			fatherNameField.setText(user.getGuardianName());
+			genderField.setText(user.getGender());
+			mobileField.setText(String.valueOf(user.getMobNo()));
+			emailField.setText(user.geteMail());
+			permanentAddressField.setText(user.getAdd());
+			cityField.setText(user.getCity());
+			stateField.setText(user.getState());
+			pincodeField.setText(String.valueOf(user.getPinCode()));
+			highestQualifField.setText(user.getHighestQual());
+			collegeField.setText(user.getHighestQualFrom());
+			scoreField.setText(String.valueOf(user.getHighestQualAggregate()));
+			passingYrField.setText(String.valueOf(user.getHighestQualPassingYr()));
+			facultyPhoto.setIcon(ImageFunctions.resizeImage(user.getImgPath()));
 		}
 		catch(ClassNotFoundException | SQLException e)
 		{
@@ -143,6 +155,8 @@ public class FacultyDetails
 		personalDetailsText.setText("Personal Details");
 		personalDetailsText.setBounds(15, 20, 120, 20);
 		personalDetailsText.setBackground(bgColor);
+		personalDetailsText.setFocusable(false);
+		personalDetailsText.setEditable(false);
 		
 		//      FIRST ROW      \\
 		textName = new JTextPane();
@@ -180,30 +194,28 @@ public class FacultyDetails
 		textGender.setEditable(false);
 		textGender.setFocusable(false);
 		genderField = new JTextField();
-	    genderField.setBounds(80, 105, 20, 20);
+	    genderField.setBounds(80, 105, 75, 20);
 	    genderField.setEditable(false);
 		
 		textMobile = new JTextPane();
-		textMobile.setBounds(115, 105, 70, 20);
+		textMobile.setBounds(156, 105, 70, 20);
 		textMobile.setText("Mobile No");
 		textMobile.setBackground(bgColor);
 		textMobile.setEditable(false);
 		textMobile.setFocusable(false);
 		mobileField = new JTextField();
-		mobileField.setBounds(185, 105, 90, 20);
+		mobileField.setBounds(238, 105, 90, 20);
 	    mobileField.setEditable(false);
-	    mobileField.setHorizontalAlignment(JTextField.CENTER);
 		
 		textEmail = new JTextPane();
-		textEmail.setBounds(290, 105, 40, 20);
+		textEmail.setBounds(340, 105, 40, 20);
 		textEmail.setText("Email");
 		textEmail.setBackground(bgColor);
 		textEmail.setEditable(false);
 		textEmail.setFocusable(false);
 		emailField = new JTextField();
-		emailField.setBounds(340, 105, 200, 20);
+		emailField.setBounds(388, 105, 200, 20);
 		emailField.setEditable(false);
-		emailField.setHorizontalAlignment(JTextField.CENTER);
 		
 		
 		//      THIRD ROW       \\
@@ -224,7 +236,6 @@ public class FacultyDetails
 		permanentAddressField = new JTextField();
 		permanentAddressField.setBounds(185, 180, 250, 20);
 		permanentAddressField.setEditable(false);
-		permanentAddressField.setHorizontalAlignment(JTextField.CENTER);
 		
 		textCity = new JTextPane();
 		textCity.setBounds(25, 230, 30, 20);
@@ -235,7 +246,6 @@ public class FacultyDetails
 		cityField = new JTextField();
 		cityField.setBounds(55, 230, 120, 20);
 		cityField.setEditable(false);
-		cityField.setHorizontalAlignment(JTextField.CENTER);
 		
 		textState = new JTextPane();
 		textState.setBounds(200, 230, 40, 20);
@@ -246,7 +256,6 @@ public class FacultyDetails
 		stateField = new JTextField();
 		stateField.setBounds(240, 230, 150, 20);
 		stateField.setEditable(false);
-		stateField.setHorizontalAlignment(JTextField.CENTER);
 		
 		textPinCode = new JTextPane();
 		textPinCode.setBounds(405, 230, 60, 20);
@@ -257,7 +266,6 @@ public class FacultyDetails
 		pincodeField = new JTextField();
 		pincodeField.setBounds(465, 230, 80, 20);
 		pincodeField.setEditable(false);
-		pincodeField.setHorizontalAlignment(JTextField.CENTER);
 		
 		
 		/*
@@ -293,7 +301,6 @@ public class FacultyDetails
 		highestQualifField = new JTextField();
 		highestQualifField.setBounds(175, 335, 90, 20);
 		highestQualifField.setEditable(false);
-		highestQualifField.setHorizontalAlignment(JTextField.CENTER);
 		
 		textCollege = new JTextPane();
 		textCollege.setBounds(280, 335, 60, 20);
@@ -304,7 +311,6 @@ public class FacultyDetails
         collegeField = new JTextField();
         collegeField.setBounds(340, 335, 200, 20);
         collegeField.setEditable(false);
-        collegeField.setHorizontalAlignment(JTextField.CENTER);
 		
 		textScore = new JTextPane();
 		textScore.setBounds(25, 385, 90, 20);
@@ -315,7 +321,6 @@ public class FacultyDetails
 		scoreField = new JTextField();
 		scoreField.setBounds(115, 385, 80, 20);
 		scoreField.setEditable(false);
-		scoreField.setHorizontalAlignment(JTextField.CENTER);
 		
 		textPassingYear = new JTextPane();
 		textPassingYear.setBounds(260, 385, 90, 20);
@@ -326,7 +331,6 @@ public class FacultyDetails
 		passingYrField = new JTextField();
 		passingYrField.setBounds(350, 385, 115, 20);
 		passingYrField.setEditable(false);
-		passingYrField.setHorizontalAlignment(JTextField.CENTER);
 		
 		
 		JButton editButton = new JButton();
