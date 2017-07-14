@@ -1,10 +1,13 @@
 package memberGUI.student;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import javax.swing.*;
 import beanClasses.StudentUser;
 import extraClasses.ReadStudentUser;
@@ -71,18 +74,6 @@ public class StdDetailedView
 	private JTextPane stdClsXIIPercentageTextPane;;
 	private JTextField stdClsXIIPercentage;
 	
-	public static void main(String[] args)
-	{
-		EventQueue.invokeLater(new Runnable()
-		{
-			public void run()
-			{
-				StdDetailedView window = new StdDetailedView(null,MainStdGUI.class.getName());
-				window.stdDetailedView.setVisible(true);
-			}
-		});
-	}
-	
 	public StdDetailedView(String stdId, String className)
 	{
 		bgColor = new Color(238, 238, 238);
@@ -103,23 +94,35 @@ public class StdDetailedView
 	
 	private void populateView()
 	{
-		StudentUser user = ReadStudentUser.readUser(userid);
-		stdName.setText(user.getfName()+" "+user.getlName()+" "+user.getlName());
-		stdFatherName.setText(user.getFatherName());
-		stdMotherName.setText(user.getMotherName());
-		stdDOB.setText(user.getDOB().toString());
-		stdCategory.setText(user.getCategory());
-		stdMobNo.setText(String.valueOf(user.getMobNo()));
-		stdAddHome.setText(user.getAdd());
-		stdAddCity.setText(user.getCity());
-		stdAddPincode.setText(String.valueOf(user.getPinconde()));
-		stdAddState.setText(user.getState());
-		stdClsXMedium.setText(user.getClsXMedium());
-		stdClsXPassingYr.setText(String.valueOf(user.getClsXPassingYr()));
-		stdClsXPercentage.setText(String.valueOf(user.getClsXPercentage()));
-		stdClsXIIMedium.setText(user.getClsXIIMedium());
-		stdClsXIIPassingYr.setText(String.valueOf(user.getClsXIIPassingYr()));
-		stdClsXIIPercentage.setText(String.valueOf(user.getClsXIIPercentage()));
+		StudentUser user;
+		try
+		{
+			user = ReadStudentUser.readUser(userid);
+			stdName.setText(user.getfName()+" "+user.getlName()+" "+user.getlName());
+			stdFatherName.setText(user.getFatherName());
+			stdMotherName.setText(user.getMotherName());
+			DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+			stdGender.setText(user.getGender());
+			stdEmail.setText(user.geteMail());
+			stdDOB.setText(df.format(user.getDOB()));
+			stdCategory.setText(user.getCategory());
+			stdMobNo.setText(String.valueOf(user.getMobNo()));
+			stdAddHome.setText(user.getAdd());
+			stdAddCity.setText(user.getCity());
+			stdAddPincode.setText(String.valueOf(user.getPinconde()));
+			stdAddState.setText(user.getState());
+			stdClsXMedium.setText(user.getClsXMedium());
+			stdClsXPassingYr.setText(String.valueOf(user.getClsXPassingYr()));
+			stdClsXPercentage.setText(String.valueOf(user.getClsXPercentage()));
+			stdClsXIIMedium.setText(user.getClsXIIMedium());
+			stdClsXIIPassingYr.setText(String.valueOf(user.getClsXIIPassingYr()));
+			stdClsXIIPercentage.setText(String.valueOf(user.getClsXIIPercentage()));
+		}
+		catch(ClassNotFoundException | SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private void associateFrameComponents()

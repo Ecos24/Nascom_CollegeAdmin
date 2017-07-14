@@ -26,9 +26,10 @@ public class Authenticate
     	Connection con = GetDBConnection.getConnection();
     	
     	String insertQuesry = "SELECT userid, password, usertype FROM "+
-    							ReadProjectProperties.getProp("TNUSERS")+" WHERE userid = ?;";
+    							ReadProjectProperties.getProp("TNUSERS")+" WHERE userid = ? AND password = ?;";
         PreparedStatement prest = con.prepareStatement(insertQuesry);
         prest.setString(1, this.user.getUserName());
+        prest.setString(2, this.user.getPassword());
         ResultSet userResultSet = prest.executeQuery();
         if( !userResultSet.next() )
         {
