@@ -10,6 +10,11 @@ import javax.swing.JButton;
 
 public class CustomRoundButton extends JButton 
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	public CustomRoundButton(String label)
 	{
 		super(label);
